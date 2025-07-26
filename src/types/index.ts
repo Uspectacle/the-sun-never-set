@@ -1,20 +1,18 @@
-import type { Empire } from "./empire";
 import type { GeoJSONFeature } from "./geo";
+import type { HistoricalEntity, SearchableEntity } from "./historical";
 
 export * from "./geo";
 export * from "./empire";
+export * from "./historical";
 
 export interface AppState {
-  countries: GeoJSONFeature[];
-  selectedCountry: string;
-  selectedBorders: GeoJSONFeature | null;
-  selectedEmpire: Empire | null;
+  modernCountries: GeoJSONFeature[];
+  historicalEntities: HistoricalEntity[];
+  searchableEntities: SearchableEntity[];
+  selectedEntity: SearchableEntity | null;
+  selectedBorders: any | null;
   loading: boolean;
   error: string | null;
-}
-
-export interface TimeState {
-  currentTime: number;
-  isAnimating: boolean;
-  animationSpeed: number;
+  searchQuery: string;
+  filteredEntities: SearchableEntity[];
 }

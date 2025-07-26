@@ -1,29 +1,33 @@
 import React from "react";
-import CountrySelector from "../CountrySelector/CountrySelector";
-import type { GeoJSONFeature } from "../../types";
+import SearchEngine from "../SearchEngine/SearchEngine";
+import type { SearchableEntity } from "../../types";
 import "./Header.css";
 
 interface HeaderProps {
-  countries: GeoJSONFeature[];
-  selectedCountry: string;
-  onCountrySelect: (countryName: string) => void;
+  entities: SearchableEntity[];
+  selectedEntity: SearchableEntity | null;
+  onEntitySelect: (entity: SearchableEntity | null) => void;
   loading: boolean;
 }
 
 const Header: React.FC<HeaderProps> = ({
-  countries,
-  selectedCountry,
-  onCountrySelect,
+  entities,
+  selectedEntity,
+  onEntitySelect,
   loading,
 }) => {
   return (
     <header className="header">
       <div className="header-content">
         <h1 className="header-title">The Sun Never Sets on the Empire</h1>
-        <CountrySelector
-          countries={countries}
-          selectedCountry={selectedCountry}
-          onCountrySelect={onCountrySelect}
+        <div className="header-subtitle">
+          Explore {entities.length.toLocaleString()} countries and empires
+          throughout history
+        </div>
+        <SearchEngine
+          entities={entities}
+          selectedEntity={selectedEntity}
+          onEntitySelect={onEntitySelect}
           loading={loading}
         />
       </div>

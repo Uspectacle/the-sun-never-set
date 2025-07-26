@@ -4,47 +4,126 @@
   left: 1rem;
   background-color: var(--bg-secondary);
   padding: 1rem;
-  border-radius: 8px;
+  border-radius: 12px;
   box-shadow: var(--shadow);
-  max-width: 300px;
-  min-width: 250px;
+  max-width: 350px;
+  min-width: 280px;
   z-index: 1000;
+  border-left: 4px solid var(--accent-primary);
+}
+
+.info-panel.historical {
+  border-left-color: var(--accent-secondary);
+}
+
+.info-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  margin-bottom: 1rem;
+  gap: 1rem;
 }
 
 .info-title {
-  font-size: 1.2rem;
+  font-size: 1.3rem;
   font-weight: bold;
   color: var(--text-primary);
-  margin-bottom: 0.75rem;
+  margin: 0;
+  flex: 1;
+  line-height: 1.2;
+}
+
+.info-year-badge {
+  background-color: var(--accent-primary);
+  color: white;
+  padding: 0.3rem 0.6rem;
+  border-radius: 6px;
+  font-size: 0.9rem;
+  font-weight: bold;
+  flex-shrink: 0;
+}
+
+.info-panel.historical .info-year-badge {
+  background-color: var(--accent-secondary);
 }
 
 .info-content {
   display: flex;
   flex-direction: column;
-  gap: 0.5rem;
+  gap: 1rem;
+}
+
+.info-section {
+  border-bottom: 1px solid var(--border-color);
+  padding-bottom: 0.75rem;
+}
+
+.info-section:last-child {
+  border-bottom: none;
+  padding-bottom: 0;
+}
+
+.info-section h4 {
+  font-size: 1rem;
+  color: var(--text-primary);
+  margin: 0 0 0.5rem 0;
+  font-weight: 600;
 }
 
 .info-item {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  margin: 0;
+  margin: 0.4rem 0;
+  gap: 1rem;
 }
 
 .info-label {
   color: var(--text-secondary);
   font-size: 0.9rem;
+  flex-shrink: 0;
 }
 
 .info-value {
   color: var(--text-primary);
   font-weight: 500;
+  text-align: right;
+  flex: 1;
 }
 
-.info-next {
-  margin-top: 0.75rem;
-  padding-top: 0.75rem;
-  border-top: 1px solid var(--border-color);
+.progress-indicator {
+  display: flex;
+  flex-direction: column;
+  gap: 0.3rem;
+}
+
+.progress-step {
   font-size: 0.8rem;
   color: var(--text-muted);
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.progress-step.completed {
+  color: var(--accent-secondary);
+}
+
+@media (max-width: 768px) {
+  .info-panel {
+    bottom: 0.5rem;
+    left: 0.5rem;
+    right: 0.5rem;
+    max-width: none;
+    min-width: auto;
+  }
+
+  .info-header {
+    flex-direction: column;
+    gap: 0.5rem;
+  }
+
+  .info-year-badge {
+    align-self: flex-start;
+  }
 }

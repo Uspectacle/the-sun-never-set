@@ -4,4 +4,234 @@
   display: flex;
   flex-direction: column;
   background-color: var(--bg-primary);
+  position: relative;
+}
+
+/* Error States */
+.error-state {
+  justify-content: center;
+  align-items: center;
+  padding: 2rem;
+}
+
+.error-message {
+  background-color: var(--bg-secondary);
+  padding: 2rem;
+  border-radius: 12px;
+  text-align: center;
+  box-shadow: var(--shadow);
+  max-width: 500px;
+  border-left: 4px solid var(--accent-primary);
+}
+
+.error-message h2 {
+  color: var(--accent-primary);
+  margin-bottom: 1rem;
+  font-size: 1.5rem;
+}
+
+.error-message p {
+  color: var(--text-secondary);
+  margin-bottom: 1rem;
+  line-height: 1.5;
+}
+
+.error-details {
+  background-color: var(--bg-primary);
+  padding: 1rem;
+  border-radius: 8px;
+  margin: 1rem 0;
+  text-align: left;
+}
+
+.error-details p {
+  color: var(--text-primary);
+  font-weight: 500;
+  margin-bottom: 0.5rem;
+}
+
+.error-details ul {
+  color: var(--text-secondary);
+  margin: 0;
+  padding-left: 1.5rem;
+}
+
+.error-details li {
+  margin: 0.3rem 0;
+}
+
+.error-message button {
+  background-color: var(--accent-primary);
+  color: white;
+  border: none;
+  padding: 0.75rem 1.5rem;
+  border-radius: 8px;
+  cursor: pointer;
+  font-size: 1rem;
+  font-weight: 500;
+  transition: background-color 0.3s ease, transform 0.1s ease;
+}
+
+.error-message button:hover {
+  background-color: #e55656;
+  transform: translateY(-1px);
+}
+
+/* Loading Overlay */
+.loading-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(26, 26, 26, 0.95);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 9999;
+  backdrop-filter: blur(4px);
+}
+
+.loading-content {
+  background-color: var(--bg-secondary);
+  padding: 2rem;
+  border-radius: 16px;
+  text-align: center;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.5);
+  max-width: 400px;
+  min-width: 320px;
+  border: 1px solid var(--border-color);
+}
+
+.loading-spinner {
+  width: 4rem;
+  height: 4rem;
+  border: 4px solid var(--border-color);
+  border-top: 4px solid var(--accent-secondary);
+  border-radius: 50%;
+  animation: spin 1s linear infinite;
+  margin: 0 auto 1.5rem auto;
+}
+
+.loading-content h3 {
+  color: var(--text-primary);
+  margin: 0 0 0.5rem 0;
+  font-size: 1.3rem;
+  font-weight: 600;
+}
+
+.loading-content p {
+  color: var(--text-secondary);
+  margin: 0 0 1rem 0;
+  font-weight: 500;
+}
+
+.loading-stats {
+  display: flex;
+  justify-content: space-around;
+  margin: 1rem 0;
+  padding: 1rem;
+  background-color: var(--bg-primary);
+  border-radius: 8px;
+}
+
+.stat {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.2rem;
+}
+
+.stat-number {
+  font-size: 1.5rem;
+  font-weight: bold;
+  color: var(--accent-secondary);
+}
+
+.stat-label {
+  font-size: 0.7rem;
+  color: var(--text-muted);
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.loading-content small {
+  color: var(--text-muted);
+  font-size: 0.8rem;
+  line-height: 1.4;
+  display: block;
+  margin-top: 1rem;
+}
+
+/* Development Info */
+.dev-info {
+  position: fixed;
+  bottom: 0;
+  right: 0;
+  background-color: rgba(0, 0, 0, 0.7);
+  color: var(--text-muted);
+  padding: 0.5rem;
+  font-size: 0.7rem;
+  z-index: 999;
+}
+
+/* Animations */
+@keyframes spin {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .error-message {
+    margin: 1rem;
+    padding: 1.5rem;
+  }
+
+  .loading-content {
+    margin: 1rem;
+    padding: 1.5rem;
+    min-width: auto;
+  }
+
+  .loading-stats {
+    flex-direction: column;
+    gap: 0.5rem;
+  }
+
+  .stat {
+    flex-direction: row;
+    justify-content: space-between;
+  }
+
+  .dev-info {
+    font-size: 0.6rem;
+    padding: 0.3rem;
+  }
+}
+
+/* High contrast mode support */
+@media (prefers-contrast: high) {
+  .error-message {
+    border-width: 2px;
+  }
+
+  .loading-content {
+    border-width: 2px;
+  }
+}
+
+/* Reduced motion support */
+@media (prefers-reduced-motion: reduce) {
+  .loading-spinner {
+    animation: none;
+  }
+
+  .error-message button {
+    transition: none;
+  }
 }

@@ -1,5 +1,4 @@
 import type { GeoJSONCollection, Empire } from "../types";
-import type { EmpireType } from "../utils/constants";
 
 export const fetchCountries = async (): Promise<GeoJSONCollection> => {
   try {
@@ -16,16 +15,16 @@ export const fetchCountries = async (): Promise<GeoJSONCollection> => {
   }
 };
 
-export const fetchHistoricalEmpire = async (
-  empireType: EmpireType,
-  year?: number
-): Promise<Empire | null> => {
-  try {
-    console.log(`Fetching ${empireType} data for year ${year || "current"}`);
-    // TODO: Implement actual API call to historical-basemaps
-    return null;
-  } catch (error) {
-    console.error("Error fetching historical empire:", error);
-    return null;
-  }
-};
+// export const fetchHistoricalEmpire = async (
+//   empireType: EmpireType,
+//   year?: number
+// ): Promise<Empire | null> => {
+//   try {
+//     console.log(`Fetching ${empireType} data for year ${year || "current"}`);
+//     // TODO: Implement actual API call to historical-basemaps
+//     return null;
+//   } catch (error) {
+//     console.error("Error fetching historical empire:", error);
+//     return null;
+//   }
+// };
