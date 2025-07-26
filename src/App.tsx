@@ -1,35 +1,71 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
-import './App.css'
+import { useState, useEffect } from "react";
+import Header from "./components/Header/Header";
+import Map from "./components/Map/Map";
+import InfoPanel from "./components/InfoPanel/InfoPanel";
+import { fetchCountries } from "./services/geoDataService";
+import { findCountryByName } from "./utils/helpers";
+import type { GeoJSONFeature } from "./types";
+import "./App.css";
 
 function App() {
-  const [count, setCount] = useState(0)
+  const [countries, setCountries] = useState<GeoJSONFeature[]>([]);
+  const [selectedCountry, setSelectedCountry] = useState<string>("");
+  const [selectedBorders, setSelectedBorders] = useState<GeoJSONFeature | null>(
+    null
+  );
+  const [loading, setLoading] = useState<boolean>(false);
+  const [error, setError] = useState<string | null>(null);
+
+  useEffect(() => {
+    const loadCountries = async () => {
+      try {
+        setLoading(true);
+        const data = await fetchCountries();
+        setCountries(data.features);
+      } catch (err) {
+        setError(err instanceof Error ? err.message : "Unknown error occurred");
+      } finally {
+        setLoading(false);
+      }
+    };
+    loadCountries();
+  }, []);
+
+  const handleCountrySelect = (countryName: string) => {
+    setSelectedCountry(countryName);
+
+    if (countryName) {
+      const country = findCountryByName(countries, countryName);
+      setSelectedBorders(country || null);
+    } else {
+      setSelectedBorders(null);
+    }
+  };
+
+  if (error) {
+    return (
+      <div className="app error-state">
+        <div className="error-message">
+          <h2>Error loading application</h2>
+          <p>{error}</p>
+          <button onClick={() => window.location.reload()}>Retry</button>
+        </div>
+      </div>
+    );
+  }
 
   return (
-    <>
-      <div>
-        <a href="https://vite.dev" target="_blank">
-          <img src={viteLogo} className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://react.dev" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
-      </div>
-      <h1>Vite + React</h1>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
-        <p>
-          Edit <code>src/App.tsx</code> and save to test HMR
-        </p>
-      </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
-    </>
-  )
+    <div className="app">
+      <Header
+        countries={countries}
+        selectedCountry={selectedCountry}
+        onCountrySelect={handleCountrySelect}
+        loading={loading}
+      />
+      <Map selectedBorders={selectedBorders} />
+      {selectedBorders && <InfoPanel selectedBorders={selectedBorders} />}
+    </div>
+  );
 }
 
-export default App
+export default App;
