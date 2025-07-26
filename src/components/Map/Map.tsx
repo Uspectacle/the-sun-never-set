@@ -2,13 +2,14 @@ import React from "react";
 import { MapContainer, TileLayer, GeoJSON } from "react-leaflet";
 import { MAP_STYLES } from "../../utils/constants";
 import "./Map.css";
+import type { Empire } from "../../types/geo";
 
 interface MapProps {
-  selectedBorders: any | null;
+  selectedEmpire: Empire | null;
   mapStyle?: any;
 }
 
-const Map: React.FC<MapProps> = ({ selectedBorders, mapStyle }) => {
+const Map: React.FC<MapProps> = ({ selectedEmpire, mapStyle }) => {
   const defaultStyle = {
     color: "#ff6b6b",
     weight: 2,
@@ -31,16 +32,14 @@ const Map: React.FC<MapProps> = ({ selectedBorders, mapStyle }) => {
           attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors &copy; <a href="https://carto.com/attributions">CARTO</a>'
         />
 
-        {selectedBorders && (
+        {selectedEmpire && (
           <GeoJSON
-            key={`${
-              selectedBorders.properties?.name
-            }_${Date.now()}`}
-            data={selectedBorders}
+            key={`${Date.now()}`}
+            data={selectedEmpire.feature}
             style={currentStyle}
             onEachFeature={(feature, layer) => {
               const props = feature.properties;
-              const name = props.ADMIN || props.NAME;
+              const name = props.NAME;
               const year = props.YEAR || 2025;
               const subjecto = props.SUBJECTO;
               const partOf = props.PARTOF;

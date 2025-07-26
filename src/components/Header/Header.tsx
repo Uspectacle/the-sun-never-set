@@ -1,33 +1,32 @@
 import React from "react";
 import SearchEngine from "../SearchEngine/SearchEngine";
-import type { SearchableEntity } from "../../types";
 import "./Header.css";
+import type { Country } from "../../types/geo";
 
 interface HeaderProps {
-  entities: SearchableEntity[];
-  selectedEntity: SearchableEntity | null;
-  onEntitySelect: (entity: SearchableEntity | null) => void;
+  countries: Country[];
+  selectedCountry: Country | null;
+  onCountrySelect: (entity: Country | null) => void;
   loading: boolean;
 }
 
 const Header: React.FC<HeaderProps> = ({
-  entities,
-  selectedEntity,
-  onEntitySelect,
+  countries,
+  selectedCountry,
+  onCountrySelect,
   loading,
 }) => {
   return (
     <header className="header">
       <div className="header-content">
-        <h1 className="header-title">The Sun Never Sets on the Empire</h1>
+        <h1 className="header-title">The Sun Never Sets</h1>
         <div className="header-subtitle">
-          Explore {entities.length.toLocaleString()} countries and empires
-          throughout history
+          Explore {countries.length} countries and empires throughout history
         </div>
         <SearchEngine
-          entities={entities}
-          selectedEntity={selectedEntity}
-          onEntitySelect={onEntitySelect}
+          countries={countries}
+          selectedCountry={selectedCountry}
+          onCountrySelect={onCountrySelect}
           loading={loading}
         />
       </div>

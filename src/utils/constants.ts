@@ -67,10 +67,3 @@ export const YEAR_TO_FILENAME: Record<number, string> = {
 export const AVAILABLE_YEARS = Object.keys(
   YEAR_TO_FILENAME
 ) as unknown as number[];
-
-export const ENTITY_COLORS = {
-  modern: "#ff6b6b",
-  historical: "#4ecdc4",
-  empire: "#f39c12",
-  civilization: "#9b59b6",
-};

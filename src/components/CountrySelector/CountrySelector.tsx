@@ -1,10 +1,9 @@
 import React from "react";
-import type { GeoJSONFeature } from "../../types";
 import { getCountryNames } from "../../utils/helpers";
 import "./CountrySelector.css";
 
 interface CountrySelectorProps {
-  countries: GeoJSONFeature[];
+  countries: GeoJSON.Feature[];
   selectedCountry: string;
   onCountrySelect: (countryName: string) => void;
   loading: boolean;

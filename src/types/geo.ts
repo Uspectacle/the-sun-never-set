@@ -1,24 +1,36 @@
-export interface GeoJSONFeature {
-  type: "Feature";
-  properties: CountryProperties;
-  geometry: {
-    type: string;
-    coordinates: number[][][] | number[][][][];
-  };
-}
-
-export interface CountryProperties {
-  name: string;
-}
-
-export interface GeoJSONCollection {
-  type: "FeatureCollection";
-  features: GeoJSONFeature[];
-}
-
-export interface MapBounds {
+export type MapBounds = {
   north: number;
   south: number;
   east: number;
   west: number;
-}
+};
+
+export type HistoricalBasemapsProperties = {
+  NAME: string | null;
+  ABBREVN: string | null;
+  SUBJECTO: string | null;
+  PARTOF: string | null;
+  BORDERPRECISION: number | null;
+};
+
+export type HistoricalBasemapsFeature = GeoJSON.Feature<
+  GeoJSON.Geometry,
+  HistoricalBasemapsProperties
+>;
+
+export type HistoricalBasemapsFeatureCollection = GeoJSON.FeatureCollection<
+  GeoJSON.Geometry,
+  HistoricalBasemapsProperties
+>;
+
+export type Country = {
+  id: string;
+  name: string;
+  year: number;
+  empireName: string;
+  feature: HistoricalBasemapsFeature;
+};
+
+export type Empire = Country & {
+  countries: Country[];
+};

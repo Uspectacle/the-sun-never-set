@@ -1,15 +1,13 @@
-import type { GeoJSONFeature } from "../types";
-
 export const findCountryByName = (
-  countries: GeoJSONFeature[],
+  countries: GeoJSON.Feature[],
   name: string
-): GeoJSONFeature | undefined => {
-  return countries.find((country) => country.properties.name === name);
+): GeoJSON.Feature | undefined => {
+  return countries.find((country) => country.properties?.name === name);
 };
 
-export const getCountryNames = (countries: GeoJSONFeature[]): string[] => {
+export const getCountryNames = (countries: GeoJSON.Feature[]): string[] => {
   return countries
-    .map((country) => country.properties.name)
+    .map((country) => country.properties?.name)
     .filter(Boolean)
     .sort();
 };

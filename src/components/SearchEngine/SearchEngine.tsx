@@ -1,22 +1,21 @@
 import React, { useState, useRef, useEffect } from "react";
-import type { SearchableEntity } from "../../types";
 import "./SearchEngine.css";
+import type { Country } from "../../types/geo";
 
 interface SearchEngineProps {
-  entities: SearchableEntity[];
-  selectedEntity: SearchableEntity | null;
-  onEntitySelect: (entity: SearchableEntity | null) => void;
+  countries: Country[];
+  selectedCountry: Country | null;
+  onCountrySelect: (entity: Country | null) => void;
   loading: boolean;
 }
 
 const SearchEngine: React.FC<SearchEngineProps> = ({
-  entities,
-  selectedEntity,
-  onEntitySelect,
+  countries,
+  onCountrySelect,
   loading,
 }) => {
   const [query, setQuery] = useState("");
-  const [suggestions, setSuggestions] = useState<SearchableEntity[]>([]);
+  const [suggestions, setSuggestions] = useState<Country[]>([]);
   const [showSuggestions, setShowSuggestions] = useState(false);
   const [highlightedIndex, setHighlightedIndex] = useState(-1);
   const inputRef = useRef<HTMLInputElement>(null);
@@ -24,7 +23,7 @@ const SearchEngine: React.FC<SearchEngineProps> = ({
 
   useEffect(() => {
     if (query.trim()) {
-      const filtered = entities.filter((entity) => {
+      const filtered = countries.filter((entity) => {
         const searchText = `${entity.name} ${entity.year}`.toLowerCase();
         return searchText.includes(query.toLowerCase());
       });
@@ -35,19 +34,19 @@ const SearchEngine: React.FC<SearchEngineProps> = ({
       setSuggestions([]);
       setShowSuggestions(false);
     }
-  }, [query, entities]);
+  }, [query, countries]);
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setQuery(e.target.value);
     if (!e.target.value.trim()) {
-      onEntitySelect(null);
+      onCountrySelect(null);
     }
   };
 
-  const handleSuggestionClick = (entity: SearchableEntity) => {
-    setQuery(entity.displayName);
+  const handleSuggestionClick = (entity: Country) => {
+    setQuery(`${entity.year} ${entity.name}`);
     setShowSuggestions(false);
-    onEntitySelect(entity);
+    onCountrySelect(entity);
   };
 
   const handleKeyDown = (e: React.KeyboardEvent) => {
@@ -82,7 +81,7 @@ const SearchEngine: React.FC<SearchEngineProps> = ({
   const handleClear = () => {
     setQuery("");
     setShowSuggestions(false);
-    onEntitySelect(null);
+    onCountrySelect(null);
     inputRef.current?.focus();
   };
 
@@ -119,15 +118,12 @@ const SearchEngine: React.FC<SearchEngineProps> = ({
               key={entity.id}
               className={`search-suggestion ${
                 index === highlightedIndex ? "highlighted" : ""
-              } ${entity.type}`}
+              }`}
               onClick={() => handleSuggestionClick(entity)}
             >
               <div className="suggestion-main">
                 <span className="suggestion-year">{entity.year}</span>
                 <span className="suggestion-name">{entity.name}</span>
-              </div>
-              <div className="suggestion-type">
-                {entity.type === "modern" ? "Modern" : "Historical"}
               </div>
             </div>
           ))}

@@ -1,68 +1,23 @@
-import type {
-  GeoJSONFeature,
-  HistoricalEntity,
-  SearchableEntity,
-} from "../types";
+import type { Country } from "../types/geo";
 
 export class SearchService {
-  static createSearchableEntities(
-    modernCountries: GeoJSONFeature[],
-    historicalEntities: HistoricalEntity[]
-  ): SearchableEntity[] {
-    const entities: SearchableEntity[] = [];
-
-    // Add modern countries
-    modernCountries.forEach((country, index) => {
-      entities.push({
-        id: `modern_${index}`,
-        displayName: `2025 - ${country.properties.name}`,
-        name: country.properties.name,
-        year: 2025,
-        type: "modern",
-        entity: country,
-      });
-    });
-
-    // Add historical entities
-    historicalEntities.forEach((entity) => {
-      entities.push({
-        id: entity.id,
-        displayName: `${entity.year} - ${entity.name}`,
-        name: entity.name,
-        year: entity.year,
-        type: "historical",
-        entity: entity,
-      });
-    });
-
-    return entities.sort((a, b) => {
-      // Sort by year (descending), then by name
-      if (a.year !== b.year) return b.year - a.year;
-      return a.name.localeCompare(b.name);
-    });
-  }
-
-  static filterEntities(
-    entities: SearchableEntity[],
-    query: string
-  ): SearchableEntity[] {
-    if (!query.trim()) return entities;
+  static filterEntities(countries: Country[], query: string): Country[] {
+    if (!query.trim()) return countries;
 
     const searchTerms = query.toLowerCase().trim().split(" ");
 
-    return entities.filter((entity) => {
-      const searchableText =
-        `${entity.name} ${entity.year} ${entity.displayName}`.toLowerCase();
+    return countries.filter((country) => {
+      const searchableText = `${country.name} ${country.year}`.toLowerCase();
       return searchTerms.every((term) => searchableText.includes(term));
     });
   }
 
   static getEntitySuggestions(
-    entities: SearchableEntity[],
+    countries: Country[],
     query: string,
     limit = 10
-  ): SearchableEntity[] {
-    const filtered = this.filterEntities(entities, query);
+  ): Country[] {
+    const filtered = this.filterEntities(countries, query);
     return filtered.slice(0, limit);
   }
 }
