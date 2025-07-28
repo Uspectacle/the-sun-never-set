@@ -5,7 +5,7 @@ export type MapBounds = {
   west: number;
 };
 
-export type HistoricalBasemapsProperties = {
+type HistoricalBasemapsProperties = {
   NAME: string | null;
   ABBREVN: string | null;
   SUBJECTO: string | null;
@@ -34,3 +34,7 @@ export type Country = {
 export type Empire = Country & {
   countries: Country[];
 };
+
+export type EmpireMap = Map<string, Empire>;
+
+export type YearData = [Country[], EmpireMap];

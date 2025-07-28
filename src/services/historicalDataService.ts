@@ -3,20 +3,18 @@ import type {
   Empire,
   HistoricalBasemapsFeatureCollection,
 } from "../types/geo";
-import {
-  AVAILABLE_YEARS,
-  HISTORICAL_BASE_URL,
-  YEAR_TO_FILENAME,
-} from "../utils/constants";
+import { HISTORICAL_BASE_URL, YEAR_TO_FILENAME } from "../utils/constants";
 
-export const fetchHistoricalData = async (year: number): Promise<Country[]> => {
+export const fetchCountries = async (year: number): Promise<Country[]> => {
   try {
     const filename = YEAR_TO_FILENAME[year];
+    
     if (!filename) {
       throw new Error(`No data available for year ${year}`);
     }
 
     const response = await fetch(`${HISTORICAL_BASE_URL}${filename}`);
+
     if (!response.ok) {
       throw new Error(
         `Failed to fetch historical data for ${year}: ${response.status}`
@@ -43,38 +41,21 @@ export const fetchHistoricalData = async (year: number): Promise<Country[]> => {
   }
 };
 
-export const fetchAllHistoricalData = async (): Promise<
-  [Country[], Map<number, Map<string, Empire>>]
-> => {
-  const allCountries: Country[] = [];
-  const allEmpires: Map<number, Map<string, Empire>> = new Map();
+export const parseEmpires = (countries: Country[]): Map<string, Empire> => {
+  const empires = new Map<string, Empire>();
 
-  AVAILABLE_YEARS.forEach((year) =>
-    fetchHistoricalData(year)
-      .then((countries) => {
-        allCountries.push(...countries);
+  countries.forEach((country) => {
+    const empireName = country.empireName;
+    const empire = empires.get(empireName) ?? {
+      ...(country.name === empireName
+        ? country
+        : countries.find(({ name }) => name === empireName) ?? country),
+      countries: [],
+    };
 
-        const empires = new Map<string, Empire>();
+    empire.countries.push(country);
+    empires.set(empireName, empire);
+  });
 
-        countries.forEach((country) => {
-          const empireName = country.empireName;
-          const empire = empires.get(empireName) ?? {
-            ...(country.name === empireName
-              ? country
-              : countries.find(({ name }) => name === empireName) ?? country),
-            countries: [],
-          };
-
-          empire.countries.push(country);
-          empires.set(empireName, empire);
-        });
-
-        allEmpires.set(year, empires);
-      })
-      .catch((error) =>
-        console.warn(`Failed to load data for year ${year}:`, error)
-      )
-  );
-
-  return [allCountries, allEmpires];
+  return empires;
 };

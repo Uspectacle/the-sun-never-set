@@ -1,0 +1,36 @@
+.timeline-container {
+  overflow-x: auto;
+  width: 100%;
+  padding-top: 5px;
+  padding-bottom: 5px;  
+}
+
+.timeline {
+  display: flex;
+  gap: 1rem;
+  position: relative;
+  align-items: center;
+}
+
+.year {
+  padding: 0.5rem 1rem;
+  cursor: pointer;
+  position: relative;
+  font-weight: 500;
+  color: #b9b9b9;
+  border-radius: 8px;
+  transition: background 0.3s ease, transform 0.2s;
+}
+
+.year.selected {
+  background: #ca7200;
+  color: white;
+  font-weight: bold;
+  transform: scale(1.1);
+}
+
+.year.selected::before {
+  background: #0077ff;
+  height: 8px;
+  width: 8px;
+}

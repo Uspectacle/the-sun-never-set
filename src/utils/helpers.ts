@@ -44,3 +44,38 @@ export const calculateSunPosition = (
 
   return { elevation, declination: solarDeclination };
 };
+
+// Generate a large pastel color palette (300+ colors)
+const generatePastelColors = (): string[] => {
+  const colors: string[] = [];
+
+  // Generate HSL-based pastel colors
+  for (let h = 0; h < 360; h += 3) {
+    // Every 3 degrees of hue (120 colors)
+    for (let s = 40; s <= 70; s += 15) {
+      // 3 saturation levels (40%, 55%, 70%)
+      for (let l = 75; l <= 90; l += 7.5) {
+        // 3 lightness levels (75%, 82.5%, 90%)
+        colors.push(`hsl(${h}, ${s}%, ${l}%)`);
+      }
+    }
+  }
+
+  return colors;
+};
+
+const PASTEL_COLORS = generatePastelColors();
+
+// Function to get a consistent color for a country based on its name
+export const getCountryColor = (countryName: string): string => {
+  // Simple hash function to get consistent color for same country
+  let hash = 0;
+  for (let i = 0; i < countryName.length; i++) {
+    const char = countryName.charCodeAt(i);
+    hash = (hash << 5) - hash + char;
+    hash = hash & hash; // Convert to 32-bit integer
+  }
+
+  const colorIndex = Math.abs(hash) % PASTEL_COLORS.length;
+  return PASTEL_COLORS[colorIndex];
+};

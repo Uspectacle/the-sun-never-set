@@ -64,6 +64,6 @@ export const YEAR_TO_FILENAME: Record<number, string> = {
   [-8000]: "world_bc8000.geojson",
 };
 
-export const AVAILABLE_YEARS = Object.keys(
-  YEAR_TO_FILENAME
-) as unknown as number[];
+export const AVAILABLE_YEARS = Object.keys(YEAR_TO_FILENAME)
+  .map((year) => +year)
+  .sort((a, b) => a - b);

@@ -1,26 +1,31 @@
-import React from "react";
+import React, { useRef } from "react";
 import { MapContainer, TileLayer, GeoJSON } from "react-leaflet";
 import { MAP_STYLES } from "../../utils/constants";
 import "./Map.css";
-import type { Empire } from "../../types/geo";
+import type {
+  Country,
+  Empire,
+  HistoricalBasemapsFeature,
+} from "../../types/geo";
+import { getCountryColor } from "../../utils/helpers";
 
 interface MapProps {
+  countries: Country[];
+  onCountrySelected: (country: Country | null) => unknown;
   selectedEmpire: Empire | null;
-  mapStyle?: any;
 }
 
-const Map: React.FC<MapProps> = ({ selectedEmpire, mapStyle }) => {
-  const defaultStyle = {
-    color: "#ff6b6b",
-    weight: 2,
-    fillColor: "#ff6b6b",
-    fillOpacity: 0.3,
-  };
+const Map: React.FC<MapProps> = ({
+  selectedEmpire,
+  countries,
+  onCountrySelected,
+}) => {
+  const selectedEmpireRef = useRef(selectedEmpire);
 
-  const currentStyle = mapStyle || defaultStyle;
+  selectedEmpireRef.current = selectedEmpire;
 
   return (
-    <div className="map-container">
+    <div className="map-container" onClick={() => onCountrySelected(null)}>
       <MapContainer
         center={[20, 0]}
         zoom={2}
@@ -32,52 +37,74 @@ const Map: React.FC<MapProps> = ({ selectedEmpire, mapStyle }) => {
           attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors &copy; <a href="https://carto.com/attributions">CARTO</a>'
         />
 
-        {selectedEmpire && (
-          <GeoJSON
-            key={`${Date.now()}`}
-            data={selectedEmpire.feature}
-            style={currentStyle}
-            onEachFeature={(feature, layer) => {
-              const props = feature.properties;
-              const name = props.NAME;
-              const year = props.YEAR || 2025;
-              const subjecto = props.SUBJECTO;
-              const partOf = props.PARTOF;
+        {countries.map((country, index) => {
+          const isSelected = country.empireName === selectedEmpire?.empireName;
+          const baseColor = getCountryColor(country.name);
 
-              let popupContent = `
-                <div style="color: black; min-width: 200px;">
-                  <h3 style="margin: 0 0 8px 0; font-weight: bold;">${name}</h3>
-                  <p style="margin: 4px 0;"><strong>Year:</strong> ${year}</p>
-              `;
+          const currentStyle = {
+            color: isSelected ? "#ffffff" : baseColor,
+            weight: isSelected ? 3 : 2,
+            fillColor: baseColor,
+            fillOpacity: isSelected ? 0.7 : 0.4,
+          };
 
-              if (subjecto && subjecto !== name) {
-                popupContent += `<p style="margin: 4px 0;"><strong>Controlled by:</strong> ${subjecto}</p>`;
-              }
+          return (
+            <GeoJSON
+              key={`${country.name}-${index}`}
+              data={country.feature}
+              style={currentStyle}
+              onEachFeature={(feature: HistoricalBasemapsFeature, layer) => {
+                layer.bindTooltip(
+                  () => {
+                    const properties = feature.properties;
 
-              if (partOf) {
-                popupContent += `<p style="margin: 4px 0;"><strong>Part of:</strong> ${partOf}</p>`;
-              }
+                    return `
+                      <div>
+                        <strong>${properties.NAME || "Unknown"}</strong><br/>
+                        ${
+                          properties.ABBREVN
+                            ? `Abbreviation: ${properties.ABBREVN}<br/>`
+                            : ""
+                        }
+                        ${
+                          properties.SUBJECTO
+                            ? `Subject: ${properties.SUBJECTO}<br/>`
+                            : ""
+                        }
+                        ${
+                          properties.PARTOF
+                            ? `Part of: ${properties.PARTOF}<br/>`
+                            : ""
+                        }
+                        ${
+                          properties.BORDERPRECISION !== null
+                            ? `Border Precision: ${properties.BORDERPRECISION}`
+                            : ""
+                        }
+                      </div>
+                    `;
+                  },
+                  {
+                    permanent: false,
+                    direction: "auto",
+                    className: "country-tooltip",
+                    interactive: false,
+                  }
+                );
 
-              if (props.POP_EST) {
-                popupContent += `<p style="margin: 4px 0;"><strong>Population:</strong> ${props.POP_EST.toLocaleString()}</p>`;
-              }
+                layer.on("click", ({ originalEvent }) => {
+                  originalEvent.stopPropagation();
 
-              if (props.BORDERPRECISION) {
-                const precision =
-                  props.BORDERPRECISION === 1
-                    ? "Approximate"
-                    : props.BORDERPRECISION === 2
-                    ? "Moderate"
-                    : "Precise";
-                popupContent += `<p style="margin: 4px 0; font-size: 0.8em; color: #666;"><strong>Border precision:</strong> ${precision}</p>`;
-              }
+                  const isCurrentlySelected =
+                    country.empireName ===
+                    selectedEmpireRef.current?.empireName;
 
-              popupContent += `</div>`;
-
-              layer.bindPopup(popupContent);
-            }}
-          />
-        )}
+                  onCountrySelected(isCurrentlySelected ? null : country);
+                });
+              }}
+            />
+          );
+        })}
       </MapContainer>
     </div>
   );
