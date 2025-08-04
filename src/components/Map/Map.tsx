@@ -1,5 +1,6 @@
 import React, { useRef } from "react";
 import { MapContainer, TileLayer, GeoJSON } from "react-leaflet";
+import L from "leaflet";
 import { MAP_STYLES } from "../../utils/constants";
 import "./Map.css";
 import type {
@@ -10,6 +11,7 @@ import type {
 import { getCountryColor } from "../../utils/helpers";
 import TerminatorLayer from "./TerminatorLayer";
 import "leaflet/dist/leaflet.css";
+import MapClickHandler from "./MapClickHandler";
 
 interface MapProps {
   countries: Country[];
@@ -27,7 +29,7 @@ const LeafletMap: React.FC<MapProps> = ({
   selectedEmpireRef.current = selectedEmpire;
 
   return (
-    <div className="map-container" onClick={() => onCountrySelected(null)}>
+    <div className="map-container">
       <MapContainer
         center={[20, 0]}
         zoom={2}
@@ -40,6 +42,8 @@ const LeafletMap: React.FC<MapProps> = ({
         />
 
         <TerminatorLayer />
+
+        <MapClickHandler onMapClick={() => onCountrySelected(null)} />
 
         {countries.map((country, index) => {
           const isSelected = country.empireName === selectedEmpire?.empireName;
@@ -96,8 +100,8 @@ const LeafletMap: React.FC<MapProps> = ({
                   }
                 );
 
-                layer.on("click", ({ originalEvent }) => {
-                  originalEvent.stopPropagation();
+                layer.on("click", (leafletEvent: L.LeafletMouseEvent) => {
+                  L.DomEvent.stopPropagation(leafletEvent);
 
                   const isCurrentlySelected =
                     country.empireName ===
