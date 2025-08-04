@@ -8,6 +8,8 @@ import type {
   HistoricalBasemapsFeature,
 } from "../../types/geo";
 import { getCountryColor } from "../../utils/helpers";
+import TerminatorLayer from "./TerminatorLayer";
+import "leaflet/dist/leaflet.css";
 
 interface MapProps {
   countries: Country[];
@@ -15,7 +17,7 @@ interface MapProps {
   selectedEmpire: Empire | null;
 }
 
-const Map: React.FC<MapProps> = ({
+const LeafletMap: React.FC<MapProps> = ({
   selectedEmpire,
   countries,
   onCountrySelected,
@@ -36,6 +38,8 @@ const Map: React.FC<MapProps> = ({
           url={MAP_STYLES.DARK}
           attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors &copy; <a href="https://carto.com/attributions">CARTO</a>'
         />
+
+        <TerminatorLayer />
 
         {countries.map((country, index) => {
           const isSelected = country.empireName === selectedEmpire?.empireName;
@@ -110,4 +114,4 @@ const Map: React.FC<MapProps> = ({
   );
 };
 
-export default Map;
+export default LeafletMap;
