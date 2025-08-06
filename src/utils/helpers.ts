@@ -1,3 +1,5 @@
+import type { PathOptions } from "leaflet";
+
 export const findCountryByName = (
   countries: GeoJSON.Feature[],
   name: string
@@ -78,4 +80,37 @@ export const getCountryColor = (countryName: string): string => {
 
   const colorIndex = Math.abs(hash) % PASTEL_COLORS.length;
   return PASTEL_COLORS[colorIndex];
+};
+
+export const getStyle = (
+  countryName: string,
+  isSelected?: boolean,
+  someAreSelected?: boolean
+): PathOptions => {
+  const baseColor = getCountryColor(countryName);
+
+  if (someAreSelected) {
+    if (isSelected) {
+      return {
+        color: "#ffffff",
+        weight: 3,
+        fillColor: "#ffffff",
+        fillOpacity: 0.7,
+      };
+    }
+
+    return {
+      color: baseColor,
+      weight: 1,
+      fillColor: baseColor,
+      fillOpacity: 0.2,
+    };
+  }
+
+  return {
+    color: baseColor,
+    weight: 2,
+    fillColor: baseColor,
+    fillOpacity: 0.4,
+  };
 };

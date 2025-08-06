@@ -8,7 +8,7 @@ import type {
   Empire,
   HistoricalBasemapsFeature,
 } from "../../types/geo";
-import { getCountryColor } from "../../utils/helpers";
+import { getStyle } from "../../utils/helpers";
 import TerminatorLayer from "./TerminatorLayer";
 import "leaflet/dist/leaflet.css";
 import MapClickHandler from "./MapClickHandler";
@@ -47,20 +47,13 @@ const LeafletMap: React.FC<MapProps> = ({
 
         {countries.map((country, index) => {
           const isSelected = country.empireName === selectedEmpire?.empireName;
-          const baseColor = getCountryColor(country.name);
-
-          const currentStyle = {
-            color: isSelected ? "#ffffff" : baseColor,
-            weight: isSelected ? 3 : 2,
-            fillColor: baseColor,
-            fillOpacity: isSelected ? 0.7 : 0.4,
-          };
+          const style = getStyle(country.name, isSelected, !!selectedEmpire);
 
           return (
             <GeoJSON
               key={`${country.name}-${index}`}
               data={country.feature}
-              style={currentStyle}
+              style={style}
               onEachFeature={(feature: HistoricalBasemapsFeature, layer) => {
                 layer.bindTooltip(
                   () => {

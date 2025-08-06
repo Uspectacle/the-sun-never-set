@@ -31,7 +31,7 @@ function App() {
     }
 
     setSelectedEmpire(empires.get(selectedCountry.empireName) ?? null);
-  }, [selectedCountry]);
+  }, [empires, selectedCountry]);
 
   return (
     <div className="app">
