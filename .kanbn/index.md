@@ -17,10 +17,11 @@ completedColumns:
 ## Todo
 
 - [animate-graph-slider](tasks/animate-graph-slider.md)
-- [github-page-action](tasks/github-page-action.md)
 
 ## In Progress
 
-- [compute-graph](tasks/compute-graph.md)
+- [github-page-action](tasks/github-page-action.md)
 
 ## Done
+
+- [compute-graph](tasks/compute-graph.md)
