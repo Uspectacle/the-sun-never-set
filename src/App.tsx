@@ -2,6 +2,8 @@ import { useState, useEffect } from "react";
 import LeafletMap from "./components/Map/Map";
 import { fetchCountries, parseEmpires } from "./services/historicalDataService";
 import "./App.css";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faGear, faCircleInfo } from "@fortawesome/free-solid-svg-icons";
 import type { Country, Empire, HistoricalBasemapsFeature } from "./types/geo";
 import Toolbar from "./components/Toolbar/Toolbar";
 import {
@@ -54,14 +56,14 @@ function App() {
           onClick={() => setIsInfoOpen(true)}
           aria-label="Show information"
         >
-          ℹ️
+          <FontAwesomeIcon icon={faCircleInfo} />
         </button>
         <button
           className="settings-button"
           onClick={() => setIsSettingsOpen(true)}
           aria-label="Open settings"
         >
-          ⚙️
+          <FontAwesomeIcon icon={faGear} />
         </button>
       </header>
       <LeafletMap

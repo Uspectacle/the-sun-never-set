@@ -1,6 +1,7 @@
 import React from "react";
 import { Modal } from "../Modal/Modal";
 import "./Settings.css";
+import { faGear } from "@fortawesome/free-solid-svg-icons";
 
 export interface DateTimeSettings {
   timeFormat: "12h" | "24h";
@@ -21,7 +22,7 @@ export const Settings: React.FC<SettingsProps> = ({
   onSettingsChange,
 }) => {
   return (
-    <Modal isOpen={isOpen} onClose={onClose} title="Settings">
+    <Modal isOpen={isOpen} onClose={onClose} title="Settings" icon={faGear}>
       <div className="settings-content">
         <div className="settings-group">
           <h3>Time Format</h3>

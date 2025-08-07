@@ -3,7 +3,7 @@ import react from "@vitejs/plugin-react";
 
 export default defineConfig({
   plugins: [react()],
-  base: "/empire-illumination/", // Pour GitHub Pages
+  base: "/the-sun-never-set/", // Pour GitHub Pages
   build: {
     outDir: "dist",
     sourcemap: true,

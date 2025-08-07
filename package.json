@@ -1,5 +1,5 @@
 {
-  "name": "empire-illumination",
+  "name": "the-sun-never-set",
   "private": true,
   "version": "0.0.0",
   "type": "module",
@@ -11,6 +11,10 @@
     "deploy": "npm run build && gh-pages -d dist"
   },
   "dependencies": {
+    "@fortawesome/fontawesome-svg-core": "^7.0.0",
+    "@fortawesome/free-brands-svg-icons": "^7.0.0",
+    "@fortawesome/free-solid-svg-icons": "^7.0.0",
+    "@fortawesome/react-fontawesome": "^0.2.3",
     "@joergdietrich/leaflet.terminator": "^1.1.0",
     "leaflet": "^1.9.4",
     "moment": "^2.30.1",
