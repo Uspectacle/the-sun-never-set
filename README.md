@@ -10,7 +10,7 @@ I hear France is still hanging on to a few “totally-not-colonies” of its own
 
 ## 🚀 What's This?
 
-This project lets you explore historical maps and visialised there realtion twoard the sun:
+This project lets you explore historical maps and visualize their relationship to the sun.
 
 - 🗺️ Interactive world map showing historical territories
 - 🌓 Real-time day/night visualization

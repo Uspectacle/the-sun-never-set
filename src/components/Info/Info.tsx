@@ -12,12 +12,7 @@ interface InfoProps {
 
 export const Info: React.FC<InfoProps> = ({ isOpen, onClose }) => {
   return (
-    <Modal
-      isOpen={isOpen}
-      onClose={onClose}
-      title="About The Sun Never Sets"
-      icon={faCircleInfo}
-    >
+    <Modal isOpen={isOpen} onClose={onClose} title="About" icon={faCircleInfo}>
       <div className="info-content">
         <section className="about-section">
           <p>
@@ -32,16 +27,23 @@ export const Info: React.FC<InfoProps> = ({ isOpen, onClose }) => {
 
         <section>
           <p>
-            This project is open source and available on{" "}
             <a
               href="https://github.com/Uspectacle/the-sun-never-set"
               target="_blank"
               rel="noopener noreferrer"
-              className="github-link"
             >
+              This project is open source and available on{" "}
               <FontAwesomeIcon icon={faGithub} /> GitHub
             </a>
-            . We welcome contributions from the community!
+          </p>
+          <p>
+            <a
+              href="https://github.com/Uspectacle/the-sun-never-set/issues"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              Click here to open an issue
+            </a>
           </p>
         </section>
 

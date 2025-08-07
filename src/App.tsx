@@ -12,6 +12,7 @@ import {
 } from "./components/Settings/Settings";
 import { Info } from "./components/Info/Info";
 import CountryInfo from "./components/CountryInfo/CountryInfo";
+import { EmpireInfo } from "./components/EmpireInfo/EmpireInfo";
 
 function App() {
   const [selectedYear, setSelectedYear] = useState<number>(1920);
@@ -81,6 +82,10 @@ function App() {
         settings={settings}
       />
       <CountryInfo feature={hoveredFeature} />
+      <EmpireInfo
+        empire={selectedEmpire}
+        date={currentDate}
+      />
       <Settings
         isOpen={isSettingsOpen}
         onClose={() => setIsSettingsOpen(false)}
