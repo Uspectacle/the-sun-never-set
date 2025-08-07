@@ -1,0 +1,40 @@
+.time-control {
+  position: absolute;
+  bottom: 20px;
+  left: 50%;
+  transform: translateX(-50%);
+  background: rgba(0, 0, 0, 0.8);
+  padding: 10px 20px;
+  border-radius: 8px;
+  z-index: 1000;
+  display: flex;
+  gap: 20px;
+}
+
+.time-control-item {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.time-control label {
+  color: rgb(255, 255, 255);
+  font-size: 14px;
+}
+
+.time-control input {
+  background: rgba(255, 255, 255, 0.1);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  border-radius: 4px;
+  color: white;
+  padding: 4px 8px;
+}
+
+.time-control input:hover {
+  border-color: rgba(255, 255, 255, 0.4);
+}
+
+.time-control input:focus {
+  outline: none;
+  border-color: rgba(255, 255, 255, 0.6);
+}

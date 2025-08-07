@@ -1,6 +1,5 @@
 import React, { useRef } from "react";
-import { MapContainer, TileLayer, GeoJSON } from "react-leaflet";
-import L from "leaflet";
+import { MapContainer, TileLayer, ZoomControl } from "react-leaflet";
 import { MAP_STYLES } from "../../utils/constants";
 import "./Map.css";
 import type {
@@ -8,24 +7,27 @@ import type {
   Empire,
   HistoricalBasemapsFeature,
 } from "../../types/geo";
-import { getStyle } from "../../utils/helpers";
 import TerminatorLayer from "./TerminatorLayer";
 import "leaflet/dist/leaflet.css";
 import MapClickHandler from "./MapClickHandler";
+import CountryLayer from "./CountryLayer";
 
 interface MapProps {
   countries: Country[];
   onCountrySelected: (country: Country | null) => unknown;
   selectedEmpire: Empire | null;
+  onFeatureHover?: (feature: HistoricalBasemapsFeature | null) => void;
+  date: Date;
 }
 
 const LeafletMap: React.FC<MapProps> = ({
   selectedEmpire,
   countries,
   onCountrySelected,
+  onFeatureHover,
+  date,
 }) => {
   const selectedEmpireRef = useRef(selectedEmpire);
-
   selectedEmpireRef.current = selectedEmpire;
 
   return (
@@ -34,78 +36,27 @@ const LeafletMap: React.FC<MapProps> = ({
         center={[20, 0]}
         zoom={2}
         className="map"
+        worldCopyJump
+        zoomControl={false}
         style={{ background: "#1a1a1a" }}
       >
         <TileLayer
           url={MAP_STYLES.DARK}
           attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors &copy; <a href="https://carto.com/attributions">CARTO</a>'
         />
-
-        <TerminatorLayer />
-
+        <ZoomControl position="bottomright" />
+        <TerminatorLayer date={date} />
         <MapClickHandler onMapClick={() => onCountrySelected(null)} />
-
-        {countries.map((country, index) => {
-          const isSelected = country.empireName === selectedEmpire?.empireName;
-          const style = getStyle(country.name, isSelected, !!selectedEmpire);
-
-          return (
-            <GeoJSON
-              key={`${country.name}-${index}`}
-              data={country.feature}
-              style={style}
-              onEachFeature={(feature: HistoricalBasemapsFeature, layer) => {
-                layer.bindTooltip(
-                  () => {
-                    const properties = feature.properties;
-
-                    return `
-                      <div>
-                        <strong>${properties.NAME || "Unknown"}</strong><br/>
-                        ${
-                          properties.ABBREVN
-                            ? `Abbreviation: ${properties.ABBREVN}<br/>`
-                            : ""
-                        }
-                        ${
-                          properties.SUBJECTO
-                            ? `Subject: ${properties.SUBJECTO}<br/>`
-                            : ""
-                        }
-                        ${
-                          properties.PARTOF
-                            ? `Part of: ${properties.PARTOF}<br/>`
-                            : ""
-                        }
-                        ${
-                          properties.BORDERPRECISION !== null
-                            ? `Border Precision: ${properties.BORDERPRECISION}`
-                            : ""
-                        }
-                      </div>
-                    `;
-                  },
-                  {
-                    permanent: false,
-                    direction: "auto",
-                    className: "country-tooltip",
-                    interactive: false,
-                  }
-                );
-
-                layer.on("click", (leafletEvent: L.LeafletMouseEvent) => {
-                  L.DomEvent.stopPropagation(leafletEvent);
-
-                  const isCurrentlySelected =
-                    country.empireName ===
-                    selectedEmpireRef.current?.empireName;
-
-                  onCountrySelected(isCurrentlySelected ? null : country);
-                });
-              }}
-            />
-          );
-        })}
+        {countries.map((country, index) => (
+          <CountryLayer
+            key={`${country.name}-${index}`}
+            country={country}
+            index={index}
+            selectedEmpire={selectedEmpire}
+            onCountrySelected={onCountrySelected}
+            onCountryHovered={onFeatureHover}
+          />
+        ))}
       </MapContainer>
     </div>
   );

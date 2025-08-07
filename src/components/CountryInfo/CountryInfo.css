@@ -1,0 +1,41 @@
+.country-info {
+  position: fixed;
+  top: 80px; /* Below the header */
+  right: 20px;
+  z-index: 1000;
+  max-width: 300px;
+  background: rgba(33, 33, 33, 0.8);
+  backdrop-filter: blur(8px);
+  border-radius: 8px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  color: white;
+  padding: 0;
+  transition: opacity 0.2s ease;
+}
+
+.country-info-content {
+  padding: 16px;
+}
+
+.country-info h2 {
+  margin: 0 0 12px 0;
+  font-size: 1.2rem;
+  font-weight: 600;
+}
+
+.info-row {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 8px;
+  font-size: 0.9rem;
+}
+
+.info-row .label {
+  color: #ccc;
+  margin-right: 12px;
+}
+
+.info-row .value {
+  text-align: right;
+  font-weight: 500;
+}

@@ -1,4 +1,5 @@
 import type { PathOptions } from "leaflet";
+import type { Coordinate, Country } from "../types/geo";
 
 export const findCountryByName = (
   countries: GeoJSON.Feature[],
@@ -112,5 +113,61 @@ export const getStyle = (
     weight: 2,
     fillColor: baseColor,
     fillOpacity: 0.4,
+  };
+};
+
+const isPosition = (
+  coordinates: Coordinate
+): coordinates is GeoJSON.Position => {
+  return (
+    Array.isArray(coordinates) &&
+    coordinates.length === 2 &&
+    typeof coordinates[0] === "number" &&
+    typeof coordinates[1] === "number"
+  );
+};
+
+const shiftCoordinates = <C extends Coordinate>(
+  coordinates: C,
+  shiftBy: number
+): C => {
+  if (isPosition(coordinates)) {
+    return [coordinates[0] + shiftBy, coordinates[1]] as C;
+  }
+
+  return coordinates.map((coord) => shiftCoordinates(coord, shiftBy)) as C;
+};
+
+const shiftFeature = (
+  feature: GeoJSON.Feature,
+  shiftBy: number
+): GeoJSON.Feature => {
+  const shiftedFeature = JSON.parse(JSON.stringify(feature)) as GeoJSON.Feature;
+
+  if (shiftedFeature.geometry.type === "GeometryCollection") {
+    return shiftedFeature;
+  }
+
+  const geometry = shiftedFeature.geometry;
+  const coordinates = geometry.coordinates;
+
+  geometry.coordinates = shiftCoordinates(coordinates, shiftBy);
+  return shiftedFeature;
+};
+
+export const combineFeatures = (
+  country: Country,
+  duplicates: number = 1
+): GeoJSON.FeatureCollection => {
+  const shiftedFeatures: GeoJSON.Feature[] = [country.feature];
+
+  for (let i = 1; i <= duplicates; i++) {
+    shiftedFeatures.push(shiftFeature(country.feature, -360 * i));
+    shiftedFeatures.push(shiftFeature(country.feature, 360 * i));
+  }
+
+  return {
+    type: "FeatureCollection",
+    features: shiftedFeatures,
   };
 };

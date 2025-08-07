@@ -1,0 +1,44 @@
+.settings-content {
+  padding: 24px;
+  min-width: 300px;
+}
+
+.settings-content {
+  padding: 24px;
+  min-width: 300px;
+}
+
+.settings-group {
+  margin-bottom: 24px;
+}
+
+.settings-group:last-child {
+  margin-bottom: 0;
+}
+
+.settings-options {
+  display: flex;
+  flex-direction: column;
+}
+
+.settings-options label {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 8px;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: background-color 0.2s ease;
+}
+
+.settings-options label:hover {
+  background: var(--bg-hover);
+}
+
+.settings-options input[type="radio"] {
+  width: 16px;
+  height: 16px;
+  margin: 0;
+  accent-color: var(--accent-primary);
+  cursor: pointer;
+}

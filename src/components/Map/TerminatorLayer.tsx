@@ -1,16 +1,28 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useRef } from "react";
 import { useMap } from "react-leaflet";
-import terminator from "@joergdietrich/leaflet.terminator";
+import terminator, { Terminator } from "@joergdietrich/leaflet.terminator";
 
-const TerminatorLayer: React.FC = () => {
+interface TerminatorLayerProps {
+  date?: Date;
+}
+
+const TerminatorLayer: React.FC<TerminatorLayerProps> = ({ date }) => {
   const map = useMap();
+  const terminatorRef = useRef<Terminator | null>(null);
 
   useEffect(() => {
     const term = terminator();
+    terminatorRef.current = term;
     term.addTo(map);
 
+    if (date) {
+      term.setTime(date);
+    }
+
     const interval = setInterval(() => {
-      term.setTime(new Date());
+      if (!date) {
+        term.setTime(new Date());
+      }
     }, 60 * 1000);
 
     return () => {
@@ -18,6 +30,12 @@ const TerminatorLayer: React.FC = () => {
       clearInterval(interval);
     };
   }, [map]);
+
+  useEffect(() => {
+    if (terminatorRef.current && date) {
+      terminatorRef.current.setTime(date);
+    }
+  }, [date]);
 
   return null;
 };

@@ -13,6 +13,8 @@ type HistoricalBasemapsProperties = {
   BORDERPRECISION: number | null;
 };
 
+export type Coordinate = GeoJSON.Position | Coordinate[];
+
 export type HistoricalBasemapsFeature = GeoJSON.Feature<
   GeoJSON.Geometry,
   HistoricalBasemapsProperties
@@ -38,3 +40,8 @@ export type Empire = Country & {
 export type EmpireMap = Map<string, Empire>;
 
 export type YearData = [Country[], EmpireMap];
+
+export type DateTimeSettings = {
+  timeFormat: "12h" | "24h";
+  dateFormat: "MM/DD" | "DD/MM" | "YYYY-MM-DD";
+};

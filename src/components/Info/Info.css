@@ -1,0 +1,37 @@
+.info-content {
+  max-height: 70vh;
+  overflow-y: auto;
+}
+
+.info-content section {
+  margin-bottom: 1.5rem;
+}
+
+.info-content h3 {
+  color: var(--text-primary);
+  margin: 0 0 0.5rem 0;
+  font-size: 1.1rem;
+}
+
+.info-content p {
+  margin: 0 0 1rem 0;
+  line-height: 1.5;
+}
+
+.info-content ul {
+  margin: 0;
+  padding-left: 1.5rem;
+}
+
+.info-content li {
+  margin: 0.5rem 0;
+}
+
+.info-content a {
+  color: var(--accent-secondary);
+  text-decoration: none;
+}
+
+.info-content a:hover {
+  text-decoration: underline;
+}

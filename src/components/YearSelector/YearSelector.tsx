@@ -4,13 +4,13 @@ import { AVAILABLE_YEARS } from "../../utils/constants";
 
 interface YearSelectorProps {
   years?: number[];
-  onSelect: (year: number) => void;
+  onYearSelected: (year: number) => void;
   selectedYear?: number;
 }
 
 const YearSelector: React.FC<YearSelectorProps> = ({
   years = AVAILABLE_YEARS,
-  onSelect,
+  onYearSelected,
   selectedYear,
 }) => {
   const selectedRef = useRef<HTMLDivElement>(null);
@@ -37,7 +37,7 @@ const YearSelector: React.FC<YearSelectorProps> = ({
             key={year}
             ref={year === selectedYear ? selectedRef : null}
             className={`year ${year === selectedYear ? "selected" : ""}`}
-            onClick={() => onSelect(year)}
+            onClick={() => onYearSelected(year)}
           >
             <span>{year}</span>
           </div>
