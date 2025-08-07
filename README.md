@@ -1,4 +1,4 @@
-# ☀️ The Sun Never Sets
+# ☀️ The Sun Never Set
 
 “The sun never set on the British Empire,” right?
 Yeah, never trust those bloody Brits.
