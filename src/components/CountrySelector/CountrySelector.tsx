@@ -1,6 +1,6 @@
 import React from "react";
-import { getCountryNames } from "../../utils/helpers";
 import "./CountrySelector.css";
+import { getCountryNames } from "../../utils/geo";
 
 interface CountrySelectorProps {
   countries: GeoJSON.Feature[];

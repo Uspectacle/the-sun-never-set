@@ -3,12 +3,12 @@ import type {
   Empire,
   HistoricalBasemapsFeatureCollection,
 } from "../types/geo";
-import { HISTORICAL_BASE_URL, YEAR_TO_FILENAME } from "../utils/constants";
+import { HISTORICAL_BASE_URL, YEAR_TO_FILENAME } from "./constants";
 
 export const fetchCountries = async (year: number): Promise<Country[]> => {
   try {
     const filename = YEAR_TO_FILENAME[year];
-    
+
     if (!filename) {
       throw new Error(`No data available for year ${year}`);
     }

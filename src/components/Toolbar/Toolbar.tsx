@@ -1,7 +1,8 @@
 import React, { useMemo } from "react";
 import { YEAR_TO_FILENAME } from "../../utils/constants";
 import "./Toolbar.css";
-import type { DateTimeSettings } from "../Settings/Settings";
+import type { DateTimeSettings } from "../../types/geo";
+import { formatDateValue, getDayOfYear, formatTimeValue } from "../../utils/dateTime";
 
 interface ToolbarProps {
   selectedYear: number;
@@ -23,6 +24,7 @@ const Toolbar: React.FC<ToolbarProps> = ({
       .map(Number)
       .sort((a, b) => a - b);
   }, []);
+
   const handleTimeSliderChange = (value: number) => {
     const hours = Math.floor(value);
     const minutes = Math.round((value % 1) * 60);
@@ -36,37 +38,6 @@ const Toolbar: React.FC<ToolbarProps> = ({
     newDate.setDate(value);
     newDate.setHours(date.getHours(), date.getMinutes());
     onDateChange(newDate);
-  };
-
-  const getDayOfYear = (date: Date) => {
-    const start = new Date(date.getFullYear(), 0, 0);
-    const diff = date.getTime() - start.getTime();
-    const oneDay = 1000 * 60 * 60 * 24;
-    return Math.floor(diff / oneDay);
-  };
-
-  const formatTimeValue = (value: number) => {
-    const hours = Math.floor(value);
-    const minutes = Math.round((value % 1) * 60);
-
-    if (settings.timeFormat === "12h") {
-      const period = hours >= 12 ? "PM" : "AM";
-      const displayHours = hours % 12 || 12;
-      return `${displayHours}:${minutes.toString().padStart(2, "0")} ${period}`;
-    }
-
-    return `${hours.toString().padStart(2, "0")}:${minutes
-      .toString()
-      .padStart(2, "0")}`;
-  };
-
-  const formatDateValue = (dayOfYear: number) => {
-    const dateObj = new Date(new Date().getFullYear(), 0, dayOfYear);
-    const month = (dateObj.getMonth() + 1).toString().padStart(2, "0");
-    const day = dateObj.getDate().toString().padStart(2, "0");
-    return settings.dateFormat === "MM/DD"
-      ? `${month}/${day}`
-      : `${day}/${month}`;
   };
 
   return (
@@ -92,7 +63,7 @@ const Toolbar: React.FC<ToolbarProps> = ({
         <div className="control-group">
           <div className="control-item slider-container">
             <label htmlFor="date-slider">
-              Date: {formatDateValue(getDayOfYear(date))}
+              Date: {formatDateValue(getDayOfYear(date), settings)}
             </label>
             <input
               type="range"
@@ -106,7 +77,11 @@ const Toolbar: React.FC<ToolbarProps> = ({
           </div>
           <div className="control-item slider-container">
             <label htmlFor="time-slider">
-              Time: {formatTimeValue(date.getHours() + date.getMinutes() / 60)}
+              Time:{" "}
+              {formatTimeValue(
+                date.getHours() + date.getMinutes() / 60,
+                settings
+              )}
             </label>
             <input
               type="range"

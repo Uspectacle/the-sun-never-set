@@ -11,10 +11,10 @@ function extractPolygons(
 
   switch (geometry.type) {
     case "Polygon":
-      features.push(turf.polygon(geometry.coordinates as number[][][]));
+      features.push(turf.polygon(geometry.coordinates));
       break;
     case "MultiPolygon":
-      features.push(turf.multiPolygon(geometry.coordinates as number[][][][]));
+      features.push(turf.multiPolygon(geometry.coordinates));
       break;
     case "GeometryCollection":
       for (const geom of geometry.geometries) {

@@ -1,15 +1,17 @@
 import { useState, useEffect } from "react";
 import LeafletMap from "./components/Map/Map";
-import { fetchCountries, parseEmpires } from "./services/historicalDataService";
+import { fetchCountries, parseEmpires } from "./utils/historicalDataService";
 import "./App.css";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faGear, faCircleInfo } from "@fortawesome/free-solid-svg-icons";
-import type { Country, Empire, HistoricalBasemapsFeature } from "./types/geo";
+import type {
+  Country,
+  DateTimeSettings,
+  Empire,
+  HistoricalBasemapsFeature,
+} from "./types/geo";
 import Toolbar from "./components/Toolbar/Toolbar";
-import {
-  Settings,
-  type DateTimeSettings,
-} from "./components/Settings/Settings";
+import { Settings } from "./components/Settings/Settings";
 import { Info } from "./components/Info/Info";
 import CountryInfo from "./components/CountryInfo/CountryInfo";
 import { EmpireInfo } from "./components/EmpireInfo/EmpireInfo";
@@ -51,7 +53,7 @@ function App() {
   return (
     <div className="app">
       <header className="header">
-        <h1 className="header-title">The Sun Never Sets</h1>
+        <h1 className="header-title">The Sun Never Set</h1>
         <button
           className="info-button"
           onClick={() => setIsInfoOpen(true)}
@@ -82,10 +84,7 @@ function App() {
         settings={settings}
       />
       <CountryInfo feature={hoveredFeature} />
-      <EmpireInfo
-        empire={selectedEmpire}
-        date={currentDate}
-      />
+      <EmpireInfo empire={selectedEmpire} date={currentDate} />
       <Settings
         isOpen={isSettingsOpen}
         onClose={() => setIsSettingsOpen(false)}

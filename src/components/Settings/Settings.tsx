@@ -2,11 +2,7 @@ import React from "react";
 import { Modal } from "../Modal/Modal";
 import "./Settings.css";
 import { faGear } from "@fortawesome/free-solid-svg-icons";
-
-export interface DateTimeSettings {
-  timeFormat: "12h" | "24h";
-  dateFormat: "MM/DD" | "DD/MM";
-}
+import type { DateTimeSettings } from "../../types/geo";
 
 interface SettingsProps {
   isOpen: boolean;

@@ -1,5 +1,6 @@
 import React from "react";
 import "./TimeControl.css";
+import { formatTimeForInput, formatDateForInput } from "../../utils/dateTime";
 
 interface TimeControlProps {
   date: Date;
@@ -19,17 +20,6 @@ const TimeControl: React.FC<TimeControlProps> = ({ date, onChange }) => {
     // Preserve the current time
     newDate.setHours(date.getHours(), date.getMinutes());
     onChange(newDate);
-  };
-
-  const formatTimeForInput = (date: Date) => {
-    return `${date.getHours().toString().padStart(2, "0")}:${date
-      .getMinutes()
-      .toString()
-      .padStart(2, "0")}`;
-  };
-
-  const formatDateForInput = (date: Date) => {
-    return date.toISOString().split("T")[0];
   };
 
   return (

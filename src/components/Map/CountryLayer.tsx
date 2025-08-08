@@ -6,7 +6,8 @@ import type {
   Empire,
   HistoricalBasemapsFeature,
 } from "../../types/geo";
-import { combineFeatures, getStyle } from "../../utils/helpers";
+import { combineFeatures } from "../../utils/geo";
+import { getStyle } from "../../utils/color";
 
 interface CountryLayerProps {
   country: Country;

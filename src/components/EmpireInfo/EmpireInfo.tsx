@@ -63,25 +63,6 @@ export const EmpireInfo: React.FC<EmpireInfoProps> = ({ empire, date }) => {
 
   if (!empire) return null;
 
-  const currentHour = date.getHours();
-  const currentMinutes = date.getMinutes();
-  const currentTimeIndex = currentHour + currentMinutes / 60;
-
-  const chartData = {
-    labels: timeLabels.slice(0, illuminationData.length),
-    datasets: [
-      {
-        label: "Illumination %",
-        data: illuminationData,
-        fill: true,
-        backgroundColor: "rgba(75, 192, 192, 0.2)",
-        borderColor: "rgba(75, 192, 192, 1)",
-        tension: 0.4,
-        pointRadius: 0,
-      },
-    ],
-  };
-
   const chartOptions: ChartOptions<"line"> = {
     responsive: true,
     scales: {
@@ -123,6 +104,25 @@ export const EmpireInfo: React.FC<EmpireInfoProps> = ({ empire, date }) => {
         },
       },
     },
+  };
+
+  const currentHour = date.getHours();
+  const currentMinutes = date.getMinutes();
+  const currentTimeIndex = currentHour + currentMinutes / 60;
+
+  const chartData = {
+    labels: timeLabels.slice(0, illuminationData.length),
+    datasets: [
+      {
+        label: "Illumination %",
+        data: illuminationData,
+        fill: true,
+        backgroundColor: "rgba(75, 192, 192, 0.2)",
+        borderColor: "rgba(75, 192, 192, 1)",
+        tension: 0.4,
+        pointRadius: 0,
+      },
+    ],
   };
 
   return (
