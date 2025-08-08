@@ -86,7 +86,7 @@ export async function* calculateIlluminationDataStream(
     );
 
     const illuminatedArea = intersection ? turf.area(intersection) : 0;
-    const illuminationPercent = (illuminatedArea / totalArea) * 100;
+    const illuminationPercent = (1 - illuminatedArea / totalArea) * 100;
 
     // Simulate delay (optional)
     await new Promise((res) => setTimeout(res, 100));

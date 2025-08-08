@@ -1,10 +1,3 @@
-export type MapBounds = {
-  north: number;
-  south: number;
-  east: number;
-  west: number;
-};
-
 type HistoricalBasemapsProperties = {
   NAME: string | null;
   ABBREVN: string | null;
@@ -36,10 +29,6 @@ export type Country = {
 export type Empire = Country & {
   countries: Country[];
 };
-
-export type EmpireMap = Map<string, Empire>;
-
-export type YearData = [Country[], EmpireMap];
 
 export type DateTimeSettings = {
   timeFormat: "12h" | "24h";

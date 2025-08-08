@@ -2,7 +2,7 @@ import React, { useEffect, useRef } from "react";
 import "./Modal.css";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import type { IconDefinition } from "@fortawesome/fontawesome-svg-core";
-import { faCross, faCrosshairs, faX } from "@fortawesome/free-solid-svg-icons";
+import { faX } from "@fortawesome/free-solid-svg-icons";
 
 interface ModalProps {
   isOpen: boolean;
