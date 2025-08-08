@@ -23,6 +23,7 @@
 }
 
 .header-title {
+  text-align: center;
   color: var(--text-primary);
   margin: 0;
   font-size: 1.5rem;
@@ -84,15 +85,8 @@
 }
 
 /* Responsive changes for small widths */
-@media (max-width: 480px) {
-  .header {
-    align-items: center;
-    justify-content: center;
-    flex-direction: column;
-  }
-
+@media (max-width: 400px) {
   .header-title {
-    text-align: center;
     font-size: 1.2rem;
   }
 
@@ -101,6 +95,15 @@
     width: 2.2rem;
     height: 2.2rem;
     font-size: 1rem;
+  }
+}
+
+/* Responsive changes for small widths */
+@media (max-width: 320px) {
+  .header {
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
   }
 
   .header-buttons {

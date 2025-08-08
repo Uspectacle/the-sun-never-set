@@ -15,11 +15,17 @@
   transition: width 0.3s ease;
 }
 
-@media (max-width: 768px) {
+@media (max-width: 550px) {
   .empire-info {
     width: 300px; /* fallback default */
     left: 50%;
     transform: translateX(-50%);
+  }
+}
+
+@media (max-width: 320px) {
+  .empire-info {
+    top: 8rem;
   }
 }
 

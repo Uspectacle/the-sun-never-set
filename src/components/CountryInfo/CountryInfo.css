@@ -39,3 +39,9 @@
   text-align: right;
   font-weight: 500;
 }
+
+@media (max-width: 550px) {
+  .country-info {
+    display: none;
+  }
+}
