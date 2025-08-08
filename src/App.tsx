@@ -56,14 +56,14 @@ function App() {
         <h1 className="header-title">The Sun Never Set</h1>
         <div className="header-buttons">
           <button
-            className="info-button"
+            className="button info-button"
             onClick={() => setIsInfoOpen(true)}
             aria-label="Show information"
           >
             <FontAwesomeIcon icon={faCircleInfo} />
           </button>
           <button
-            className="settings-button"
+            className="button settings-button"
             onClick={() => setIsSettingsOpen(true)}
             aria-label="Open settings"
           >
@@ -86,7 +86,7 @@ function App() {
         settings={settings}
       />
       <CountryInfo feature={hoveredFeature} />
-      <EmpireInfo empire={selectedEmpire} date={currentDate} />
+      <EmpireInfo empire={selectedEmpire} date={currentDate} onClose={() => setSelectedCountry(null)} />
       <Settings
         isOpen={isSettingsOpen}
         onClose={() => setIsSettingsOpen(false)}

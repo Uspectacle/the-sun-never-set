@@ -57,9 +57,9 @@ const Toolbar: React.FC<ToolbarProps> = ({
     if (isPlaying) {
       playIntervalRef.current = setInterval(() => {
         const newDate = new Date(date);
-        newDate.setMinutes(newDate.getMinutes() + 15); // advance 15 minutes
+        newDate.setMinutes(newDate.getMinutes() + 15);
         onDateChange(newDate);
-      }, 1); // speed: every 300ms
+      }, 10);
     } else {
       if (playIntervalRef.current) {
         clearInterval(playIntervalRef.current);
@@ -97,6 +97,13 @@ const Toolbar: React.FC<ToolbarProps> = ({
         <div className="control-group">
           <div className="control-item slider-container">
             <label htmlFor="date-slider">
+              <button
+                className="button play-button placeholder"
+                aria-hidden="true"
+                tabIndex={-1}
+              >
+                <FontAwesomeIcon icon={isPlaying ? faPause : faPlay} />
+              </button>
               Date: {formatDateValue(getDayOfYear(date), settings)}
             </label>
             <input
@@ -113,7 +120,7 @@ const Toolbar: React.FC<ToolbarProps> = ({
           <div className="control-item slider-container">
             <label htmlFor="time-slider">
               <button
-                className="play-button"
+                className="button play-button"
                 onClick={() => setIsPlaying((prev) => !prev)}
               >
                 <FontAwesomeIcon icon={isPlaying ? faPause : faPlay} />

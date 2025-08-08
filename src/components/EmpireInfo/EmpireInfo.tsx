@@ -17,6 +17,8 @@ import {
   calculateIlluminationDataStream,
   generateTimeLabels,
 } from "../../utils/illumination";
+import { faX } from "@fortawesome/free-solid-svg-icons";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
 ChartJS.register(
   CategoryScale,
@@ -31,9 +33,14 @@ ChartJS.register(
 interface EmpireInfoProps {
   empire: Empire | null;
   date: Date;
+  onClose: () => unknown;
 }
 
-export const EmpireInfo: React.FC<EmpireInfoProps> = ({ empire, date }) => {
+export const EmpireInfo: React.FC<EmpireInfoProps> = ({
+  empire,
+  date,
+  onClose,
+}) => {
   const [illuminationData, setIlluminationData] = useState<number[]>([]);
   const timeLabels = useMemo(() => generateTimeLabels(), []);
 
@@ -127,7 +134,12 @@ export const EmpireInfo: React.FC<EmpireInfoProps> = ({ empire, date }) => {
 
   return (
     <div className="empire-info">
-      <h2>{empire.name}</h2>
+      <div className="header-info">
+        <h2>{empire.name}</h2>
+        <button className="button close-button" onClick={onClose}>
+          <FontAwesomeIcon icon={faX} />
+        </button>
+      </div>
       <div className="graph-container">
         <Line data={chartData} options={chartOptions} />
       </div>

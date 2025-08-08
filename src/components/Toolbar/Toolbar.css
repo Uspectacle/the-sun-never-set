@@ -127,18 +127,91 @@
 }
 
 .play-button {
+  font-size: unset;
+  width: unset;
+  height: unset;
+  display: inline;
   background: none;
-  border: none;
-  cursor: pointer;
-  pointer-events: auto;
-  color: var(--text-primary);
-  padding: 5px;
 }
 
-.play-button:hover {
-  transform: scale(1.1);
+.placeholder {
+  visibility: hidden; /* takes space but not visible */
 }
 
-.play-button:active {
-  opacity: 0.9;
+/* Responsive adjustments for smaller widths */
+@media (max-width: 720px) {
+  .toolbar {
+    flex-direction: column;
+    align-items: stretch;
+    gap: 12px;
+    padding: 8px 12px;
+  }
+
+  .toolbar-section {
+    border-right: none;
+    padding-right: 0;
+    width: 100%;
+  }
+
+  .toolbar-section:not(:last-child) {
+    border-right: none;
+    padding-right: 0;
+  }
+
+  .control-group {
+    flex-direction: column;
+    gap: 8px;
+    width: 100%;
+    margin-bottom: 8px;
+  }
+
+  .control-item {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 8px;
+    width: 100%;
+  }
+
+  .slider-container {
+    width: 100%;
+  }
+
+  .year-select {
+    width: 100%;
+  }
+
+  .slider {
+    height: 3px;
+  }
+
+  .play-button {
+    padding: 3px;
+  }
+}
+
+/* Extra tweak for very narrow screens (e.g., phones < 400px) */
+@media (max-width: 400px) {
+  .toolbar {
+    padding: 6px 10px;
+    gap: 8px;
+  }
+
+  .slider-container label {
+    font-size: 12px;
+  }
+
+  .control-item select {
+    font-size: 12px;
+    padding: 4px 8px;
+  }
+
+  .slider::-webkit-slider-thumb,
+  .slider::-moz-range-thumb {
+    width: 12px;
+    height: 12px;
+  }
+
+  .leaflet-control-attribution {
+    font-size: 8px;
+  }
 }

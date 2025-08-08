@@ -60,10 +60,6 @@
   transition: background-color 0.2s;
 }
 
-.close-button:hover {
-  background-color: var(--bg-primary);
-}
-
 .modal-body {
   padding: 1rem;
   color: var(--text-secondary);

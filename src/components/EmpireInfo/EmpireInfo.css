@@ -12,6 +12,13 @@
   pointer-events: auto;
 }
 
+.header-info {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border-bottom: 1px solid var(--border-color);
+}
+
 .empire-info h2 {
   margin: 0 0 1rem 0;
   font-size: 1.2rem;
