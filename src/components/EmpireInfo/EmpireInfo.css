@@ -10,6 +10,7 @@
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
   z-index: 1000;
   pointer-events: auto;
+  color: white;
 }
 
 .header-info {
@@ -25,25 +26,11 @@
   color: var(--text-primary);
 }
 
-.empire-info .graph-container {
-  background: var(--bg-primary);
+.graph-container {
+  position: relative;
   border-radius: 4px;
   padding: 0.5rem;
   margin-top: 0.5rem;
-  position: relative; /* keep stacking context */
-}
-
-.empire-info .stats {
-  margin-top: 1rem;
-  display: flex;
-  justify-content: space-between;
-  color: var(--text-secondary);
-  font-size: 0.9rem;
-}
-
-.empire-info .current-illumination {
-  color: var(--text-primary);
-  font-size: 1.1rem;
-  font-weight: 500;
-  margin-bottom: 0.5rem;
+  overflow: hidden;
+  color: white;
 }

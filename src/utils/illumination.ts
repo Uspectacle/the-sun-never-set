@@ -45,35 +45,23 @@ export async function* calculateIlluminationDataStream(
     return;
   }
 
-  const countryPolygons: GeoJSON.Feature<
-    GeoJSON.Polygon | GeoJSON.MultiPolygon
-  >[] = [];
-  let totalArea = 0;
+  const multiCoords = empire.countries.flatMap((country) =>
+    extractPolygons(country.feature.geometry).flatMap((feature) => {
+      const geom = feature.geometry;
 
-  for (const country of empire.countries) {
-    const polygons = extractPolygons(country.feature.geometry);
-    for (const poly of polygons) {
-      countryPolygons.push(poly);
-      totalArea += turf.area(poly);
-    }
-  }
-
-  if (totalArea === 0) {
-    for (let i = 0; i < 25; i++) yield 0;
-    return;
-  }
-
-  const multiCoords = countryPolygons.flatMap((feature) => {
-    if (feature.geometry.type === "Polygon") {
-      return [feature.geometry.coordinates];
-    } else if (feature.geometry.type === "MultiPolygon") {
-      return feature.geometry.coordinates;
-    }
-    return [];
-  });
+      if (geom.type === "Polygon") {
+        return [geom.coordinates];
+      } else if (geom.type === "MultiPolygon") {
+        return geom.coordinates;
+      }
+      return [];
+    })
+  );
 
   const empireMultiPolygon = turf.multiPolygon(multiCoords);
+
   const simplifiedEmpire = turf.simplify(empireMultiPolygon, { tolerance: 1 });
+  const totalArea = turf.area(simplifiedEmpire);
   const term = terminator();
 
   for (let hourIndex = 0; hourIndex <= 24; hourIndex++) {

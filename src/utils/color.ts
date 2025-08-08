@@ -46,6 +46,7 @@ export const getStyle = (
         color: "#ffffff",
         weight: 3,
         fillColor: "#ffffff",
+        opacity: 1,
         fillOpacity: 0.7,
       };
     }
@@ -53,14 +54,16 @@ export const getStyle = (
       color: baseColor,
       weight: 1,
       fillColor: baseColor,
+      opacity: 0.2,
       fillOpacity: 0.2,
     };
   }
 
   return {
     color: baseColor,
-    weight: 2,
+    weight: 1,
     fillColor: baseColor,
+    opacity: 1,
     fillOpacity: 0.4,
   };
 };

@@ -57,7 +57,16 @@ const Toolbar: React.FC<ToolbarProps> = ({
     if (isPlaying) {
       playIntervalRef.current = setInterval(() => {
         const newDate = new Date(date);
-        newDate.setMinutes(newDate.getMinutes() + 15);
+        let totalMinutes = newDate.getHours() * 60 + newDate.getMinutes();
+
+        totalMinutes += 15;
+        totalMinutes = totalMinutes % (24 * 60);
+
+        const newHours = Math.floor(totalMinutes / 60);
+        const newMinutes = totalMinutes % 60;
+
+        newDate.setHours(newHours);
+        newDate.setMinutes(newMinutes);
         onDateChange(newDate);
       }, 10);
     } else {
