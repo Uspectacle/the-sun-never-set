@@ -16,7 +16,8 @@
 }
 
 .modal-content {
-  background: var(--bg-secondary);
+  background: rgba(26, 24, 29, 0.5);
+  backdrop-filter: blur(8px);
   border-radius: 12px;
   min-width: 320px;
   max-width: 500px;

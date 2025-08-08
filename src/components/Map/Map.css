@@ -24,3 +24,21 @@
 .leaflet-zoom-animated {
   background-color: rgba(255, 230, 69, 0.2);
 }
+
+.leaflet-control-zoom a.leaflet-control-zoom-in,
+.leaflet-control-zoom a.leaflet-control-zoom-out {
+  background: rgba(26, 24, 29, 0.6);
+  backdrop-filter: blur(8px);
+  color: white;
+  border-bottom-color: rgb(111, 111, 111);
+}
+
+.leaflet-control-zoom a.leaflet-control-zoom-in:hover,
+.leaflet-control-zoom a.leaflet-control-zoom-out:hover {
+  background: rgba(26, 24, 29, 0.8);
+}
+
+.leaflet-control-zoom a.leaflet-control-zoom-in:active,
+.leaflet-control-zoom a.leaflet-control-zoom-out:active {
+  background: rgba(26, 24, 29, 0.3);
+}

@@ -2,7 +2,8 @@
   position: absolute;
   left: 1rem;
   top: 5rem;
-  background: var(--bg-secondary);
+  background: rgba(26, 24, 29, 0.5);
+  backdrop-filter: blur(8px);
   border: 1px solid var(--border-color);
   border-radius: 8px;
   padding: 8px;
