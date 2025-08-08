@@ -59,7 +59,7 @@ export const EmpireInfo: React.FC<EmpireInfoProps> = ({ empire, date }) => {
     return () => {
       isMounted = false;
     };
-  }, [empire, date]);
+  }, [empire, date.getFullYear(), date.getMonth(), date.getDate()]);
 
   if (!empire) return null;
 

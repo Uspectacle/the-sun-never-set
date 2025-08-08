@@ -2,7 +2,12 @@ import React, { useMemo } from "react";
 import { YEAR_TO_FILENAME } from "../../utils/constants";
 import "./Toolbar.css";
 import type { DateTimeSettings } from "../../types/geo";
-import { formatDateValue, getDayOfYear, formatTimeValue } from "../../utils/dateTime";
+import {
+  formatDateValue,
+  getDayOfYear,
+  formatTimeValue,
+  isLeapYear,
+} from "../../utils/dateTime";
 
 interface ToolbarProps {
   selectedYear: number;
@@ -70,7 +75,7 @@ const Toolbar: React.FC<ToolbarProps> = ({
               id="date-slider"
               className="slider"
               min="1"
-              max="365"
+              max={isLeapYear(date.getFullYear()) ? 366 : 365}
               value={getDayOfYear(date)}
               onChange={(e) => handleDateSliderChange(parseInt(e.target.value))}
             />
@@ -88,7 +93,7 @@ const Toolbar: React.FC<ToolbarProps> = ({
               id="time-slider"
               className="slider"
               min="0"
-              max="24"
+              max="23.75"
               step="0.25"
               value={date.getHours() + date.getMinutes() / 60}
               onChange={(e) =>
