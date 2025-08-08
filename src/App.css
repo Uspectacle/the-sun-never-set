@@ -18,6 +18,8 @@
   align-items: center;
   gap: 1rem;
   pointer-events: none; /* Allow clicks to pass through to the map */
+  flex-wrap: wrap; /* Allow items to wrap when needed */
+  justify-content: space-between;
 }
 
 .header-title {
@@ -30,6 +32,13 @@
   padding: 0.5rem 1rem;
   border-radius: 8px;
   backdrop-filter: blur(4px);
+}
+
+.header-buttons {
+  display: flex;
+  align-self: center;
+  justify-content: space-between;
+  flex: 1;
 }
 
 .info-button,
@@ -72,9 +81,32 @@
 }
 
 .settings-button {
-  position: absolute;
-  right: 1rem;
-  top: 1rem;
+  position: static; /* Remove absolute for wrapping */
   background-color: rgba(0, 0, 0, 0.5);
   backdrop-filter: blur(4px);
+}
+
+/* Responsive changes for small widths */
+@media (max-width: 480px) {
+  .header {
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+  }
+
+  .header-title {
+    text-align: center;
+    font-size: 1.2rem;
+  }
+
+  .info-button,
+  .settings-button {
+    width: 2.2rem;
+    height: 2.2rem;
+    font-size: 1rem;
+  }
+
+  .header-buttons {
+    width: 100%;
+  }
 }

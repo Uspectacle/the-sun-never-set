@@ -54,20 +54,22 @@ function App() {
     <div className="app">
       <header className="header">
         <h1 className="header-title">The Sun Never Set</h1>
-        <button
-          className="info-button"
-          onClick={() => setIsInfoOpen(true)}
-          aria-label="Show information"
-        >
-          <FontAwesomeIcon icon={faCircleInfo} />
-        </button>
-        <button
-          className="settings-button"
-          onClick={() => setIsSettingsOpen(true)}
-          aria-label="Open settings"
-        >
-          <FontAwesomeIcon icon={faGear} />
-        </button>
+        <div className="header-buttons">
+          <button
+            className="info-button"
+            onClick={() => setIsInfoOpen(true)}
+            aria-label="Show information"
+          >
+            <FontAwesomeIcon icon={faCircleInfo} />
+          </button>
+          <button
+            className="settings-button"
+            onClick={() => setIsSettingsOpen(true)}
+            aria-label="Open settings"
+          >
+            <FontAwesomeIcon icon={faGear} />
+          </button>
+        </div>
       </header>
       <LeafletMap
         countries={countries}
