@@ -86,7 +86,12 @@ function App() {
         settings={settings}
       />
       <CountryInfo feature={hoveredFeature} />
-      <EmpireInfo empire={selectedEmpire} date={currentDate} onClose={() => setSelectedCountry(null)} />
+      <EmpireInfo
+        empire={selectedEmpire}
+        date={currentDate}
+        onClose={() => setSelectedCountry(null)}
+        onDateChange={setCurrentDate}
+      />
       <Settings
         isOpen={isSettingsOpen}
         onClose={() => setIsSettingsOpen(false)}

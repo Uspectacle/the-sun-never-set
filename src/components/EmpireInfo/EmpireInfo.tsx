@@ -59,12 +59,14 @@ interface EmpireInfoProps {
   empire: Empire | null;
   date: Date;
   onClose: () => unknown;
+  onDateChange: (newDate: Date) => unknown;
 }
 
 export const EmpireInfo: React.FC<EmpireInfoProps> = ({
   empire,
   date,
   onClose,
+  onDateChange,
 }) => {
   const [illuminationData, setIlluminationData] = useState<number[]>([]);
   const timeLabels = useMemo(() => generateTimeLabels(), []);
@@ -100,15 +102,34 @@ export const EmpireInfo: React.FC<EmpireInfoProps> = ({
     .fill(null)
     .map((_, i) => illuminationData[i] ?? null);
 
+  // Current time index (fractional), then rounded & clamped to available indices
   const currentHour = date.getHours();
   const currentMinutes = date.getMinutes();
   const currentTimeIndex = currentHour + currentMinutes / 60;
-  const closestIndex = paddedData.length
-    ? paddedData.findIndex((_, i) => i === Math.round(currentTimeIndex))
-    : -1;
+  let roundedIndex = Math.round(currentTimeIndex);
+  roundedIndex = Math.max(0, Math.min(roundedIndex, paddedData.length - 1));
 
+  // Chart options — tooltip shows value to two decimals
   const chartOptions: ChartOptions<"line"> = {
     responsive: true,
+    onClick: (_event, elements, chart) => {
+      if (!elements.length) return;
+
+      const element = elements[0];
+      const index = element.index;
+
+      const label = chart.data.labels?.[index] as string;
+      if (!label) return;
+
+      const [hourStr, minuteStr] = label.split(":");
+      const hours = parseInt(hourStr, 10);
+      const minutes = parseInt(minuteStr, 10) || 0;
+
+      const newDate = new Date(date);
+      newDate.setHours(hours, minutes, 0, 0);
+      console.log(newDate);
+      onDateChange(newDate);
+    },
     scales: {
       y: {
         beginAtZero: true,
@@ -138,29 +159,23 @@ export const EmpireInfo: React.FC<EmpireInfoProps> = ({
       tooltip: {
         mode: "index",
         intersect: false,
-      },
-    },
-    elements: {
-      point: {
-        radius: (ctx) => {
-          const index = ctx.dataIndex;
-          console.log("radius", closestIndex);
-          return index === closestIndex ? 6 : 0;
-        },
-        backgroundColor: (ctx) => {
-          const index = ctx.dataIndex;
-          console.log("backgroundColor", closestIndex);
-          return index === closestIndex
-            ? "rgba(255, 255, 255, 1)"
-            : "rgba(255, 223, 0, 1)";
+        callbacks: {
+          label: (context) => {
+            const value = context.parsed.y;
+            return value !== null && value !== undefined
+              ? `${Number(value).toFixed(2)}%`
+              : "";
+          },
         },
       },
     },
+    // no need for scriptable elements.point now — we use a dedicated dataset for the big dot
   };
+
+  // split the data into the two existing datasets
   const redData = paddedData.map((v) => {
     if (v === null) return null;
     if (v >= 0.5) return null;
-
     return v;
   });
 
@@ -177,28 +192,59 @@ export const EmpireInfo: React.FC<EmpireInfoProps> = ({
     return isTransition ? v : null;
   });
 
+  // Build base datasets (hide their points)
+  const datasets: ChartData<"line">["datasets"] = [
+    {
+      label: "SunSet",
+      data: redData,
+      fill: true,
+      backgroundColor: "rgba(61, 0, 183, 0.3)",
+      borderColor: "rgba(61, 0, 183, 1)",
+      tension: 0.4,
+      pointRadius: 0, // keep their points hidden
+      pointHitRadius: 15,
+    },
+    {
+      label: "SunRise",
+      data: yellowData,
+      fill: true,
+      backgroundColor: "rgba(255, 223, 0, 0.3)",
+      borderColor: "rgba(255, 223, 0, 1)",
+      tension: 0.4,
+      pointRadius: 0,
+      pointHitRadius: 15,
+    },
+  ];
+
+  // Add a dedicated "Now" dataset with exactly one visible point at roundedIndex,
+  // but only if there is actual data at that index.
+  const highlightedValue = paddedData[roundedIndex];
+  if (highlightedValue !== null && highlightedValue !== undefined) {
+    const nowPointData = paddedData.map((_, i) =>
+      i === roundedIndex ? highlightedValue : null
+    );
+    datasets.push({
+      label: "Now",
+      data: nowPointData,
+      showLine: true,
+      animations: {
+        y: { duration: 0 },
+        x: { duration: 0 },
+      },
+      // big dot styling:
+      pointRadius: 8,
+      pointHoverRadius: 10,
+      pointBackgroundColor: "rgba(255, 255, 255, 1)",
+      pointBorderColor: "rgba(0, 0, 0, 0.6)",
+      pointBorderWidth: 2,
+      fill: false,
+      tension: 0,
+    });
+  }
+
   const chartData: ChartData<"line"> = {
     labels: timeLabels,
-    datasets: [
-      {
-        label: "SunSet",
-        data: redData,
-        fill: true,
-        backgroundColor: "rgba(61, 0, 183, 0.3)", // translucent red fill
-        borderColor: "rgba(61, 0, 183, 1)", // solid red line
-        tension: 0.4,
-        pointRadius: 0,
-      },
-      {
-        label: "SunRise",
-        data: yellowData,
-        fill: true,
-        backgroundColor: "rgba(255, 223, 0, 0.3)", // translucent yellow fill
-        borderColor: "rgba(255, 223, 0, 1)", // solid yellow line
-        tension: 0.4,
-        pointRadius: 0,
-      },
-    ],
+    datasets,
   };
 
   return (

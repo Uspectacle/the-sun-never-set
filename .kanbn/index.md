@@ -21,11 +21,10 @@ completedColumns:
 
 ## In Progress
 
-- [current-dot-visible-on-the-graph](tasks/current-dot-visible-on-the-graph.md)
-
 ## Done
 
 - [compute-graph](tasks/compute-graph.md)
+- [current-dot-visible-on-the-graph](tasks/current-dot-visible-on-the-graph.md)
 - [github-page-action](tasks/github-page-action.md)
 - [mobile-layout-and-reponsivity](tasks/mobile-layout-and-reponsivity.md)
 - [improve-style-of-graph](tasks/improve-style-of-graph.md)
