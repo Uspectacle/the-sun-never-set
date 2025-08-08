@@ -1,4 +1,4 @@
-import React, { useMemo } from "react";
+import React, { useMemo, useState, useEffect, useRef } from "react";
 import { YEAR_TO_FILENAME } from "../../utils/constants";
 import "./Toolbar.css";
 import type { DateTimeSettings } from "../../types/geo";
@@ -8,6 +8,8 @@ import {
   formatTimeValue,
   isLeapYear,
 } from "../../utils/dateTime";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faPause, faPlay } from "@fortawesome/free-solid-svg-icons";
 
 interface ToolbarProps {
   selectedYear: number;
@@ -24,11 +26,16 @@ const Toolbar: React.FC<ToolbarProps> = ({
   onDateChange,
   settings,
 }) => {
-  const availableYears = useMemo(() => {
-    return Object.keys(YEAR_TO_FILENAME)
-      .map(Number)
-      .sort((a, b) => a - b);
-  }, []);
+  const availableYears = useMemo(
+    () =>
+      Object.keys(YEAR_TO_FILENAME)
+        .map(Number)
+        .sort((a, b) => a - b),
+    []
+  );
+
+  const [isPlaying, setIsPlaying] = useState(false);
+  const playIntervalRef = useRef<NodeJS.Timeout | null>(null);
 
   const handleTimeSliderChange = (value: number) => {
     const hours = Math.floor(value);
@@ -44,6 +51,27 @@ const Toolbar: React.FC<ToolbarProps> = ({
     newDate.setHours(date.getHours(), date.getMinutes());
     onDateChange(newDate);
   };
+
+  // Handle play/pause logic
+  useEffect(() => {
+    if (isPlaying) {
+      playIntervalRef.current = setInterval(() => {
+        const newDate = new Date(date);
+        newDate.setMinutes(newDate.getMinutes() + 15); // advance 15 minutes
+        onDateChange(newDate);
+      }, 1); // speed: every 300ms
+    } else {
+      if (playIntervalRef.current) {
+        clearInterval(playIntervalRef.current);
+        playIntervalRef.current = null;
+      }
+    }
+    return () => {
+      if (playIntervalRef.current) {
+        clearInterval(playIntervalRef.current);
+      }
+    };
+  }, [isPlaying, date, onDateChange]);
 
   return (
     <div className="toolbar">
@@ -64,6 +92,7 @@ const Toolbar: React.FC<ToolbarProps> = ({
           </select>
         </div>
       </div>
+
       <div className="toolbar-section time-section">
         <div className="control-group">
           <div className="control-item slider-container">
@@ -80,8 +109,15 @@ const Toolbar: React.FC<ToolbarProps> = ({
               onChange={(e) => handleDateSliderChange(parseInt(e.target.value))}
             />
           </div>
+
           <div className="control-item slider-container">
             <label htmlFor="time-slider">
+              <button
+                className="play-button"
+                onClick={() => setIsPlaying((prev) => !prev)}
+              >
+                <FontAwesomeIcon icon={isPlaying ? faPause : faPlay} />
+              </button>
               Time:{" "}
               {formatTimeValue(
                 date.getHours() + date.getMinutes() / 60,

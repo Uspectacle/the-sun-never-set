@@ -126,26 +126,19 @@
   background: rgba(255, 255, 255, 0.1);
 }
 
-.zoom-button {
-  background: rgba(255, 255, 255, 0.05);
-  border: 1px solid rgba(255, 255, 255, 0.1);
-  border-radius: 6px;
-  color: white;
-  width: 32px;
-  height: 32px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-size: 18px;
+.play-button {
+  background: none;
+  border: none;
   cursor: pointer;
-  transition: all 0.2s ease;
+  pointer-events: auto;
+  color: var(--text-primary);
+  padding: 5px;
 }
 
-.zoom-button:hover {
-  background: rgba(255, 255, 255, 0.1);
-  border-color: rgba(255, 255, 255, 0.2);
+.play-button:hover {
+  transform: scale(1.1);
 }
 
-.zoom-button:active {
-  transform: scale(0.95);
+.play-button:active {
+  opacity: 0.9;
 }
