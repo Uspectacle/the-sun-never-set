@@ -20,3 +20,7 @@
 .leaflet-interactive:focus {
   outline: none !important;
 }
+
+.leaflet-zoom-animated {
+  background-color: rgba(255, 230, 69, 0.2);
+}
