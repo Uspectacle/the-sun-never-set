@@ -18,7 +18,7 @@ import {
   calculateIlluminationDataStream,
   generateTimeLabels,
 } from "../../utils/illumination";
-import { faX } from "@fortawesome/free-solid-svg-icons";
+import { faXmark } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
 // Add this plugin near your imports or inside the component file:
@@ -206,7 +206,7 @@ export const EmpireInfo: React.FC<EmpireInfoProps> = ({
       <div className="header-info">
         <h2>{empire.name}</h2>
         <button className="button close-button" onClick={onClose}>
-          <FontAwesomeIcon icon={faX} />
+          <FontAwesomeIcon icon={faXmark} />
         </button>
       </div>
       <div className="graph-container">

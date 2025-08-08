@@ -2,7 +2,7 @@ import React, { useEffect, useRef } from "react";
 import "./Modal.css";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import type { IconDefinition } from "@fortawesome/fontawesome-svg-core";
-import { faX } from "@fortawesome/free-solid-svg-icons";
+import { faXmark } from "@fortawesome/free-solid-svg-icons";
 
 interface ModalProps {
   isOpen: boolean;
@@ -54,7 +54,7 @@ export const Modal: React.FC<ModalProps> = ({
             {title}
           </h2>
           <button className="button close-button" onClick={onClose}>
-            <FontAwesomeIcon icon={faX} />
+            <FontAwesomeIcon icon={faXmark} />
           </button>
         </div>
         <div className="modal-body">{children}</div>
