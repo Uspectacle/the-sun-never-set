@@ -7,7 +7,7 @@
   backdrop-filter: blur(10px);
   -webkit-backdrop-filter: blur(10px);
   padding: 12px 24px;
-  border-radius: 12px;
+  border-radius: 8px;
   z-index: 1000;
   display: flex;
   gap: 24px;
@@ -43,24 +43,15 @@
   font-weight: 500;
 }
 
-.control-item select {
-  background: rgba(255, 255, 255, 0.05);
-  border: 1px solid rgba(255, 255, 255, 0.1);
-  border-radius: 6px;
-  color: white;
+.year-select {
+  appearance: auto; /* let the browser draw it */
+  color: black;
   padding: 6px 10px;
   font-size: 13px;
   transition: all 0.2s ease;
-}
-
-.year-select {
-  width: 70px;
-  appearance: none;
-  background-image: url("data:image/svg+xml;charset=UTF-8,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='white' width='18px' height='18px'%3e%3cpath d='M7 10l5 5 5-5z'/%3e%3c/svg%3e");
-  background-repeat: no-repeat;
-  background-position: right 6px center;
   padding-right: 28px;
   cursor: pointer;
+  border-radius: 8px;
 }
 
 .slider-container {
@@ -74,7 +65,7 @@
   width: 100%;
   height: 4px;
   background: rgba(255, 255, 255, 0.1);
-  border-radius: 2px;
+  border-radius: 8px;
   -webkit-appearance: none;
   appearance: none;
   outline: none;
@@ -113,14 +104,12 @@
   background: var(--accent-primary-hover);
 }
 
-.control-item input:hover,
-.control-item select:hover {
+.control-item input:hover {
   border-color: rgba(255, 255, 255, 0.2);
   background-color: rgba(255, 255, 255, 0.08);
 }
 
-.control-item input:focus,
-.control-item select:focus {
+.control-item input:focus {
   outline: none;
   border-color: var(--accent-primary);
   background: rgba(255, 255, 255, 0.1);
@@ -169,13 +158,10 @@
   .control-item {
     gap: 8px;
     width: 100%;
+    justify-content: center;
   }
 
   .slider-container {
-    width: 100%;
-  }
-
-  .year-select {
     width: 100%;
   }
 
@@ -197,11 +183,6 @@
 
   .slider-container label {
     font-size: 12px;
-  }
-
-  .control-item select {
-    font-size: 12px;
-    padding: 4px 8px;
   }
 
   .slider::-webkit-slider-thumb,
