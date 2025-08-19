@@ -15,28 +15,16 @@ const CountryInfo: React.FC<CountryInfoProps> = ({ feature }) => {
     <div className="country-info">
       <div className="country-info-content">
         <h2>{properties.NAME || "Unknown"}</h2>
-        {properties.ABBREVN && (
-          <div className="info-row">
-            <span className="label">Abbreviation:</span>
-            <span className="value">{properties.ABBREVN}</span>
-          </div>
-        )}
-        {properties.SUBJECTO && (
-          <div className="info-row">
-            <span className="label">Subject:</span>
-            <span className="value">{properties.SUBJECTO}</span>
-          </div>
-        )}
-        {properties.PARTOF && (
+        {properties.PART_OF && (
           <div className="info-row">
             <span className="label">Part of:</span>
-            <span className="value">{properties.PARTOF}</span>
+            <span className="value">{properties.PART_OF}</span>
           </div>
         )}
-        {properties.BORDERPRECISION !== null && (
+        {properties.BORDER_PRECISION !== null && (
           <div className="info-row">
             <span className="label">Border Precision:</span>
-            <span className="value">{properties.BORDERPRECISION}</span>
+            <span className="value">{properties.BORDER_PRECISION}</span>
           </div>
         )}
       </div>

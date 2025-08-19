@@ -30,8 +30,7 @@ export const fetchCountries = async (year: number): Promise<Country[]> => {
         name: feature.properties.NAME!,
         year,
         empireName:
-          feature.properties.SUBJECTO ||
-          feature.properties.PARTOF ||
+          feature.properties.PART_OF ||
           feature.properties.NAME!,
         feature: feature,
       }));

@@ -1,9 +1,7 @@
 type HistoricalBasemapsProperties = {
   NAME: string | null;
-  ABBREVN: string | null;
-  SUBJECTO: string | null;
-  PARTOF: string | null;
-  BORDERPRECISION: number | null;
+  PART_OF: string | null;
+  BORDER_PRECISION: number | null;
 };
 
 export type Coordinate = GeoJSON.Position | Coordinate[];
