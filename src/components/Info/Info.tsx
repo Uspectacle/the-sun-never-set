@@ -46,7 +46,6 @@ export const Info: React.FC<InfoProps> = ({ isOpen, onClose }) => {
             </a>
           </p>
         </section>
-
         <section>
           <p>
             This project rests on the shoulders of giants. Many thanks to the
@@ -84,6 +83,16 @@ export const Info: React.FC<InfoProps> = ({ isOpen, onClose }) => {
               </a>
             </li>
           </ul>
+          <p>
+            The cleaned and edited historical borders can be found here:{" "}
+            <a
+              href="https://github.com/Uspectacle/historical-basemaps-cleaned"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              historical-basemaps-cleaned
+            </a>
+          </p>
         </section>
 
         <section>

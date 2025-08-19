@@ -21,12 +21,14 @@ This project lets you explore historical maps and visualize their relationship t
 - React + TypeScript + Vite
 - Leaflet.js for mapping
 
-This project wouldn't be possible without the amazing work of:
+This project was made possible thanks to the incredible work of:
 
-- [Adrian Ourednik](https://github.com/aourednik/historical-basemaps) for the historical maps data
-- [Jörg Dietrich](https://github.com/joergdietrich/Leaflet.Terminator) for the day/night visualization
+- [Adrian Ourednik](https://github.com/aourednik/historical-basemaps) for providing historical maps data
+- [Jörg Dietrich](https://github.com/joergdietrich/Leaflet.Terminator) for providing day/night visualization
 
-AI assistance was used during this project.
+The cleaned and edited historical borders can be found here: [historical-basemaps-cleaned](https://github.com/Uspectacle/historical-basemaps-cleaned).
+
+> ⚡ AI assistance was used during the development of this project.
 
 ## 🏃‍♂️ Running Locally
 

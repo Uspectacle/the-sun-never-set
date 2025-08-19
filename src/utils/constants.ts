@@ -6,7 +6,7 @@ export const MAP_STYLES = {
 } as const;
 
 export const HISTORICAL_BASE_URL =
-  "https://raw.githubusercontent.com/aourednik/historical-basemaps/master/geojson/";
+  "https://raw.githubusercontent.com/Uspectacle/historical-basemaps-cleaned/master/geojson/";
 
 export const YEAR_TO_FILENAME: Record<number, string> = {
   100: "world_100.geojson",
